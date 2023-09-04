@@ -42,10 +42,10 @@ public class SplachActivity extends AppCompatActivity {
     }
 
     private void splachOnce(){
-        h.postDelayed(() -> setSplachVisible(true, 0), 100);
-        h.postDelayed(() -> setSplachVisible(true, 1), 200);
-        h.postDelayed(() -> setSplachVisible(true, 2), 300);
-        h.postDelayed(() -> setSplachVisible(true, 3), 400);
+        for (int i = 0; i < splaches.length; i++){
+            h.postDelayed(
+            () -> setSplachVisible(true, i), 100 * i + 100);
+        }
 
         h.postDelayed(() -> IntStream.range(0, 4).forEach(i -> setSplachVisible(false, i)), 500);
     }

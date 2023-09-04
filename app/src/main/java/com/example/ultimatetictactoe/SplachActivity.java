@@ -28,13 +28,7 @@ public class SplachActivity extends AppCompatActivity {
 
         IntStream.range(0, 4).forEach(i -> setSplachVisible(false, i));
 
-
-        // can change the amount of cycles by changing this variable alone!
-        // all the rest of the code is build on it
-        int cycles = 3;
-
-        splachSequance(cycles, 0);
-        h.postDelayed(()-> startActivity(new Intent(this, MenuActivity.class)), cycles * 600);
+        splachSequance(3);
     }
 
     private void setSplachVisible(boolean isVisible, int index) {
@@ -50,11 +44,10 @@ public class SplachActivity extends AppCompatActivity {
         h.postDelayed(() -> IntStream.range(0, 4).forEach(i -> setSplachVisible(false, i)), 500);
     }
 
-    private void splachSequance(int times, int ran){
-        Log.d("SPLACH", "splashed once");
-        if (ran < times) h.postDelayed(this::splachOnce, ran * 600L);
-        else return;
-
-        splachSequance(times, ran + 1);
+    private void splachSequance(int cycles){
+        for (int i = 0; i < cycles; i ++){
+            h.postDelayed(this::splachOnce, i * 600);
+        }
+        h.postDelayed(()-> startActivity(new Intent(this, MenuActivity.class)), cycles * 600);
     }
 }

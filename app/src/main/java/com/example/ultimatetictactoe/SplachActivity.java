@@ -26,7 +26,7 @@ public class SplachActivity extends AppCompatActivity {
         splaches[2] = findViewById(R.id.splach3);
         splaches[3] = findViewById(R.id.splach4);
 
-        IntStream.range(0, 4).forEach(i -> setSplachVisible(false, i));
+        for (int i = 0; i < 4; i++) setSplachVisible(false, i);
 
         splachSequance(3);
     }
@@ -37,8 +37,9 @@ public class SplachActivity extends AppCompatActivity {
 
     private void splachOnce(){
         for (int i = 0; i < splaches.length; i++){
+            int j = i; // affectively final variable inside lambda
             h.postDelayed(
-            () -> setSplachVisible(true, i), 100 * i + 100);
+            () -> setSplachVisible(true, j), 100 * j + 100);
         }
 
         h.postDelayed(() -> IntStream.range(0, 4).forEach(i -> setSplachVisible(false, i)), 500);

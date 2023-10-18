@@ -3,5 +3,5 @@
 
     <solid android:color="#707070" /> <!-- Line color -->
     <corners android:radius="8dp" /> <!-- Adjust the radius to control corner roundness -->
-    <size android:width="350dp" android:height="4dp" /> <!-- Line thickness and height -->
+    <size android:width="400dp" android:height="4dp" /> <!-- Line thickness and height -->
 </shape>

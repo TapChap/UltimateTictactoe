@@ -11,29 +11,30 @@
     tools:context=".GameActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainGridLayout"
         android:layout_width="match_parent"
         android:layout_height="400dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19">
+        app:layout_constraintVertical_bias="0.25">
 
-<!--        main grid-->
+        <!--        main grid-->
         <ImageView
             android:id="@+id/LVline"
-            android:layout_width="8dp"
+            android:layout_width="5dp"
             android:layout_height="match_parent"
             android:background="@drawable/rounded_line_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.32"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/RVline"
-            android:layout_width="8dp"
+            android:layout_width="5dp"
             android:layout_height="match_parent"
             android:background="@drawable/rounded_line_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -45,7 +46,7 @@
         <ImageView
             android:id="@+id/THline"
             android:layout_width="wrap_content"
-            android:layout_height="8dp"
+            android:layout_height="5dp"
             android:background="@drawable/rounded_line_horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -56,7 +57,7 @@
         <ImageView
             android:id="@+id/BHline"
             android:layout_width="wrap_content"
-            android:layout_height="8dp"
+            android:layout_height="5dp"
             android:background="@drawable/rounded_line_horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -64,9 +65,9 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.66" />
 
-<!--        (counting is from left to right, top to bottom)-->
+        <!--        (counting is from left to right, top to bottom)-->
 
-<!--        top left inner grid-->
+        <!--        top left inner grid-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/TLinnerGrid"
             android:layout_width="116dp"
@@ -215,7 +216,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--        top middle inner grid-->
+        <!--        top middle inner grid-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/TMinnerGrid"
             android:layout_width="116dp"
@@ -368,7 +369,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--        top right inner grid-->
+        <!--        top right inner grid-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/TRinnerGrid"
             android:layout_width="116dp"
@@ -460,7 +461,7 @@
                 android:layout_width="27dp"
                 android:layout_height="27dp"
                 app:layout_constraintBottom_toTopOf="@+id/TRb"
-                app:layout_constraintEndToStartOf="@+id/TRl"
+                app:layout_constraintEnd_toStartOf="@+id/TRl"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/TRt"
                 tools:srcCompat="@tools:sample/avatars" />
@@ -470,7 +471,7 @@
                 android:layout_width="27dp"
                 android:layout_height="27dp"
                 app:layout_constraintBottom_toTopOf="@+id/TRb"
-                app:layout_constraintEndToStartOf="@+id/TRr"
+                app:layout_constraintEnd_toStartOf="@+id/TRr"
                 app:layout_constraintStart_toEndOf="@+id/TRl"
                 app:layout_constraintTop_toBottomOf="@+id/TRt"
                 tools:srcCompat="@tools:sample/avatars" />
@@ -480,7 +481,7 @@
                 android:layout_width="27dp"
                 android:layout_height="27dp"
                 app:layout_constraintBottom_toTopOf="@+id/TRb"
-                app:layout_constraintEndToEndOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/TRr"
                 app:layout_constraintTop_toBottomOf="@+id/TRt"
                 tools:srcCompat="@tools:sample/avatars" />
@@ -490,7 +491,7 @@
                 android:layout_width="27dp"
                 android:layout_height="27dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEndToStartOf="@+id/TRl"
+                app:layout_constraintEnd_toStartOf="@+id/TRl"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/TRb"
                 tools:srcCompat="@tools:sample/avatars" />
@@ -500,7 +501,7 @@
                 android:layout_width="27dp"
                 android:layout_height="27dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEndToStartOf="@+id/TRr"
+                app:layout_constraintEnd_toStartOf="@+id/TRr"
                 app:layout_constraintStart_toEndOf="@+id/TRl"
                 app:layout_constraintTop_toBottomOf="@+id/TRb"
                 tools:srcCompat="@tools:sample/avatars" />
@@ -510,14 +511,14 @@
                 android:layout_width="27dp"
                 android:layout_height="27dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEndToEndOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/TRr"
                 app:layout_constraintTop_toBottomOf="@+id/TRb"
                 tools:srcCompat="@tools:sample/avatars" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--        middle left inner grid-->
+        <!--        middle left inner grid-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/MLinnerGrid"
             android:layout_width="116dp"
@@ -672,7 +673,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--        middle middle inner grid-->
+        <!--        middle middle inner grid-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/MMinnerGrid"
             android:layout_width="116dp"
@@ -828,7 +829,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--        middle right inner grid-->
+        <!--        middle right inner grid-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/MRinnerGrid"
             android:layout_width="116dp"
@@ -983,7 +984,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--        bottom left inner grid-->
+        <!--        bottom left inner grid-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/BLinnerGrid"
             android:layout_width="116dp"
@@ -1132,7 +1133,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--        bottom middle inner grid-->
+        <!--        bottom middle inner grid-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/BMinnerGrid"
             android:layout_width="116dp"
@@ -1281,7 +1282,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--        bottom right inner grid-->
+        <!--        bottom right inner grid-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/BRinnerGrid"
             android:layout_width="116dp"
@@ -1338,6 +1339,7 @@
                 app:layout_constraintVertical_bias="0.69" />
 
             <!--   pieces-->
+
             <ImageView
                 android:id="@+id/piece72"
                 android:layout_width="27dp"
@@ -1431,5 +1433,94 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainGridLayout">
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/b00"
+                android:backgroundTint="@color/blackIsh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="2dp" />
+
+            <Button
+                android:id="@+id/b01"
+                android:backgroundTint="@color/blackIsh"
+                android:layout_marginHorizontal="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/b02"
+                android:backgroundTint="@color/blackIsh"
+                android:layout_marginHorizontal="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/b10"
+                android:backgroundTint="@color/blackIsh"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="2dp" />
+
+            <Button
+                android:id="@+id/b11"
+                android:backgroundTint="@color/blackIsh"
+                android:layout_marginHorizontal="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/b12"
+                android:backgroundTint="@color/blackIsh"
+                android:layout_marginHorizontal="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/b20"
+                android:backgroundTint="@color/blackIsh"
+                android:layout_marginHorizontal="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/b21"
+                android:backgroundTint="@color/blackIsh"
+                android:layout_marginHorizontal="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/b22"
+                android:backgroundTint="@color/blackIsh"
+                android:layout_marginHorizontal="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+    </TableLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

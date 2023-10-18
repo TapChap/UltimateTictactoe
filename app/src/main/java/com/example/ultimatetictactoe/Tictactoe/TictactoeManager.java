@@ -2,36 +2,41 @@ package com.example.ultimatetictactoe.Tictactoe;
 
 public class TictactoeManager {
 
-    private char[][] board = new char[3][3];
+    private Piece[][] board = new Piece[3][3];
 
     private boolean isX = true;
 
-    public TictactoeManager(){
+    public TictactoeManager() {
         restart();
     }
 
-    public void restart(){
+    public void restart() {
         isX = true;
 
-        for (int i = 0; i < board.length; i++){
+        for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                board[i][j] = ' ';
+                board[i][j] = Piece.EMPTY;
             }
         }
     }
 
-    public String updateBoard(int i, int j){
-        this.board[i][j] = isX? 'x' : 'o';
-
-        return String.valueOf(board[i][j]);
+    public void set(int i, int j) {
+        set(i, j, isX ? Piece.X : Piece.O);
     }
 
-    public void nextTurn(){
+    public void set(int i, int j, Piece piece) {
+        this.board[i][j] = piece;
         isX = !isX;
+        update();
     }
 
-    public String getTurn(){
-        return isX? "X" : "O";
+    public Piece get(int i, int j) {
+        return board[i][j];
+    }
+
+    public Piece getTurn() {
+        isX = !isX;
+        return !isX ? Piece.X : Piece.O;
     }
 
     public boolean hasWon() {
@@ -40,31 +45,25 @@ public class TictactoeManager {
                 checkDig(true) || checkDig(false);
     }
 
+    void update() {
+    }
+
     public boolean checkRow(int row) {
-        char c = board[0][row];
+        Piece p = board[0][row];
 
         for (int i = 0; i < 3; i++) {
-            if (board[i][row] != c || board[i][row] == ' ')
+            if (board[i][row] != p || board[i][row] == Piece.EMPTY)
                 return false;
         }
         return true;
     }
 
     public boolean checkCol(int col) {
-        char c = board[col][0];
+        Piece p = board[col][0];
 
         for (int i = 0; i < board.length; i++) {
-            if (board[col][i] != c || board[col][i] == ' ')
+            if (board[col][i] != p || board[col][i] == Piece.EMPTY)
                 return false;
-        }
-        return true;
-    }
-
-    public boolean boardFull(){
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                if (board[i][j] == ' ') return false;
-            }
         }
         return true;
     }
@@ -73,13 +72,22 @@ public class TictactoeManager {
         int k = 0;
         if (n) k = 2;
 
-        char c = board[0][k];
+        Piece c = board[0][k];
 
         for (int i = 0; i < board.length; i++) {
-            if (board[i][k] != c || board[i][k] == ' ')
+            if (board[i][k] != c || board[i][k] == Piece.EMPTY)
                 return false;
-            if (n) k --;
-            else k ++;
+            if (n) k--;
+            else k++;
+        }
+        return true;
+    }
+
+    public boolean boardFull() {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                if (board[i][j] == Piece.EMPTY) return false;
+            }
         }
         return true;
     }

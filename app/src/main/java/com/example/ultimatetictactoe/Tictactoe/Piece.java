@@ -1,5 +1,7 @@
 package com.example.ultimatetictactoe.Tictactoe;
 
+import com.example.ultimatetictactoe.R;
+
 public enum Piece {
     X('X'), O('O'), EMPTY('-');
 
@@ -11,6 +13,17 @@ public enum Piece {
 
     public char getPiece() {
         return piece;
+    }
+
+    public int getImg(){
+        switch(this.piece){
+            case 'X':
+                return R.drawable.x;
+            case 'O':
+                return R.drawable.o;
+            default:
+                return R.drawable.empty;
+        }
     }
 
     public boolean equals(Piece other){

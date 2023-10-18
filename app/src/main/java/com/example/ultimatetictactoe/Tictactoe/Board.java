@@ -8,19 +8,19 @@ import java.util.function.Consumer;
 
 public class Board extends TictactoeManager {
     private ImageView[][] board = new ImageView[3][3];
-    private Piece winnerPiece = Piece.EMPTY;
+    private int i, j;
 
     private final String TAG = "Board";
 
-    public Board(ImageView[][] imageViews) {
+    public Board(ImageView[][] imageViews, int row, int col) {
         foreach((i, j) -> board[i][j] = imageViews[i][j]);
+        this.i = row;
+        this.j = col;
     }
 
     public Board(){}
 
-    @Override
-    void update(){
-        Log.d(TAG, "updated");
+    public void update(){
         foreach((i, j) -> {
             Piece piece = get(i, j);
             board[i][j].setImageResource(piece.getImg());
@@ -29,6 +29,14 @@ public class Board extends TictactoeManager {
 
     public void setImage(int i, int j, ImageView image){
         this.board[i][j] = image;
+    }
+
+    public int getRow(){
+        return i;
+    }
+
+    public int getCol(){
+        return j;
     }
 
     // foreach methods

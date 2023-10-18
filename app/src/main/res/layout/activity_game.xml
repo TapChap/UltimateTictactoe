@@ -1498,7 +1498,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/mainLine_Right"
             app:layout_constraintTop_toTopOf="@+id/mainLine_Top"
-            tools:srcCompat="@tools:sample/avatars" />
+            tools:srcCompat="@tools:sample/avatars"
+            />
 
 
         <!--        bottom left board image-->
@@ -1536,93 +1537,79 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TableLayout
+    <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:rowCount="3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mainGridLayout">
 
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
             <Button
                 android:id="@+id/b00"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="2dp"
-                android:backgroundTint="@color/blackIsh" />
+                android:layout_width="70dp"
+                android:layout_height="65dp"
+                android:backgroundTint="@color/blackIsh"
+                />
 
             <Button
                 android:id="@+id/b01"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="2dp"
-                android:backgroundTint="@color/blackIsh" />
+                android:layout_width="70dp"
+                android:layout_height="65dp"
+                android:backgroundTint="@color/blackIsh"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                />
 
             <Button
                 android:id="@+id/b02"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="2dp"
+                android:layout_width="70dp"
+                android:layout_height="65dp"
                 android:backgroundTint="@color/blackIsh" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
 
             <Button
                 android:id="@+id/b10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="2dp"
+                android:layout_width="70dp"
+                android:layout_height="65dp"
                 android:backgroundTint="@color/blackIsh" />
 
             <Button
                 android:id="@+id/b11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="2dp"
-                android:backgroundTint="@color/blackIsh" />
+                android:layout_width="70dp"
+                android:layout_height="65dp"
+                android:backgroundTint="@color/blackIsh"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                />
 
             <Button
                 android:id="@+id/b12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="2dp"
+                android:layout_width="70dp"
+                android:layout_height="65dp"
                 android:backgroundTint="@color/blackIsh" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
 
             <Button
                 android:id="@+id/b20"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="2dp"
+                android:layout_width="70dp"
+                android:layout_height="65dp"
                 android:backgroundTint="@color/blackIsh" />
 
             <Button
                 android:id="@+id/b21"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="2dp"
-                android:backgroundTint="@color/blackIsh" />
+                android:layout_width="70dp"
+                android:layout_height="65dp"
+                android:backgroundTint="@color/blackIsh"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                />
 
             <Button
                 android:id="@+id/b22"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="2dp"
+                android:layout_width="70dp"
+                android:layout_height="65dp"
                 android:backgroundTint="@color/blackIsh" />
-        </TableRow>
-
-    </TableLayout>
-
+    </GridLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,11 +3,15 @@ package com.example.ultimatetictactoe;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.ultimatetictactoe.Tictactoe.Board;
+import com.example.ultimatetictactoe.Tictactoe.Piece;
+
+import java.util.ArrayList;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
     private final String TAG = "GameActivity";
@@ -16,22 +20,19 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private Board mainBoard = new Board();
     private Board selectedBoard;
 
-    private boolean canChoose = true;
+    private boolean canChoose;
 
-    private Button buttons[][] = new Button[3][3];
-    private ImageView mainImages[][] = new ImageView[3][3];
+    private final Button[][] buttons = new Button[3][3];
+    private final ImageView[][] mainImages = new ImageView[3][3];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        for (int i = 0; i < boards.length; i++)
-            for (int j = 0; j < boards[i].length; j++) {
-                boards[i][j] = new Board(getBoard(i, j));
-            }
-
-        selectedBoard = boards[0][0];
+        for (int i = 0; i < Math.pow(boards.length, 2); i++) {
+            boards[i / 3][i % 3] = new Board(getBoard(i), i / 3, i % 3);
+        }
 
         for (int i = 0; i < buttons.length; i++) {
             for (int j = 0; j < buttons[i].length; j++) {
@@ -47,6 +48,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 mainImages[i][j].setOnClickListener(this);
             }
         }
+
+        setControlPanelEnabled(false);
+        canChoose = true;
     }
 
     @Override
@@ -58,27 +62,81 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
                 // control panel button pressed
                 if (buttons[i][j].getId() == id) {
+                    setControlPanelEnabled(true);
                     selectedBoard.set(i, j, mainBoard.getTurn());
-                    selectedBoard = boards[i][j];
+                    selectedBoard.update();
+
+                    // disable clicks & update board image if won board
+                    if (selectedBoard.hasWon(mainBoard.getTurn())) {
+                        int row = selectedBoard.getRow(), col = selectedBoard.getCol();
+                        mainImages[row][col].setImageResource(boards[row][col].getWinner().getLargeImg());
+                        mainImages[row][col].setClickable(false);
+                    }
+
+                    // checking if the next board can be played
+                    if (boards[i][j].hasWon(Piece.EMPTY) || boards[i][j].isTie()){
+                        // allow the next player to choose the next board, if the previous board was won
+                        setControlPanelEnabled(false);
+                        canChoose = true;
+                    } else {
+                        disableButtons(getTakenCells(boards[i][j]));
+                        selectedBoard = boards[i][j];
+                        canChoose = false;
+                    }
+
+                    mainBoard.next();
                 }
 
                 // main image pressed
                 if (mainImages[i][j].getId() == id) {
-                    if (canChoose) selectedBoard = boards[i][j];
-
+                    Log.d(TAG, "hasWon:" + boards[i][j].hasWon(Piece.EMPTY) + " canChoose:" + canChoose);
+                    if (canChoose && !boards[i][j].hasWon(Piece.EMPTY)) {
+                        selectedBoard = boards[i][j];
+                        setControlPanelEnabled(true);
+                        disableButtons(getTakenCells(boards[i][j]));
+                    }
                 }
+            }
+        }
+
+        Log.d(TAG, "canChoose:" + canChoose);
+    }
+
+    private void setControlPanelEnabled(boolean enabled) {
+        for (int i = 0; i < buttons.length; i++) {
+            for (int j = 0; j < buttons[i].length; j++) {
+                buttons[i][j].setEnabled(enabled);
+                buttons[i][j].setAlpha(enabled? 1f: 0.25f);
             }
         }
     }
 
-    public ImageView[][] getBoard(int i, int j) {
-        ImageView[][] board = new ImageView[3][3];
-        int boardIndex = i * 3 + j;
+    private void disableButtons(ArrayList<Button> buttons){
+        for (Button button : buttons) {
+            button.setEnabled(false);
+            button.setAlpha(0.25f);
+        }
+    }
 
-        for (int l = 0; l < 9; l++) {
-            String str = "piece" + ((boardIndex * 9) + l);
+    private ArrayList<Button> getTakenCells(Board board){
+        ArrayList<Button> takenButtons = new ArrayList<>();
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board.get(i, j) != Piece.EMPTY) takenButtons.add(buttons[i][j]);
+            }
+        }
+
+        return takenButtons;
+    }
+
+    public ImageView[][] getBoard(int boardIndex) {
+        ImageView[][] board = new ImageView[3][3];
+
+        for (int i = 0; i < 9; i++) {
+            String str = "piece" + ((boardIndex * 9) + i);
             int resId = getResources().getIdentifier(str, "id", getPackageName());
-            board[l / 3][l % 3] = findViewById(resId);
+            board[i / 3][i % 3] = findViewById(resId);
         }
 
         return board;

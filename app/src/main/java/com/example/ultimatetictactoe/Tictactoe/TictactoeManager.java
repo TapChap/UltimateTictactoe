@@ -5,6 +5,7 @@ public class TictactoeManager {
     private Piece[][] board = new Piece[3][3];
 
     private boolean isX = true;
+    private Piece winner = Piece.EMPTY;
 
     public TictactoeManager() {
         restart();
@@ -26,8 +27,6 @@ public class TictactoeManager {
 
     public void set(int i, int j, Piece piece) {
         this.board[i][j] = piece;
-        isX = !isX;
-        update();
     }
 
     public Piece get(int i, int j) {
@@ -35,20 +34,30 @@ public class TictactoeManager {
     }
 
     public Piece getTurn() {
+        return isX ? Piece.X : Piece.O;
+    }
+
+    public void next() {
         isX = !isX;
-        return !isX ? Piece.X : Piece.O;
     }
 
-    public boolean hasWon() {
-        return checkCol(0) || checkCol(1) || checkCol(2) ||
-                checkRow(0) || checkRow(1) || checkRow(2) ||
-                checkDig(true) || checkDig(false);
+    public boolean hasWon(Piece turn) {
+        if (checkCol(0) || checkCol(1) || checkCol(2) ||
+            checkRow(0) || checkRow(1) || checkRow(2) ||
+            checkDig(true) || checkDig(false)) {
+            if (winner == Piece.EMPTY) winner = turn;
+            return true;
+        }
+        return false;
     }
 
-    void update() {
+    public Piece getWinner(){
+        return winner;
     }
 
-    public boolean checkRow(int row) {
+    void update() {}
+
+    private boolean checkRow(int row) {
         Piece p = board[0][row];
 
         for (int i = 0; i < 3; i++) {
@@ -58,7 +67,7 @@ public class TictactoeManager {
         return true;
     }
 
-    public boolean checkCol(int col) {
+    private boolean checkCol(int col) {
         Piece p = board[col][0];
 
         for (int i = 0; i < board.length; i++) {
@@ -68,7 +77,7 @@ public class TictactoeManager {
         return true;
     }
 
-    public boolean checkDig(boolean n) {
+    private boolean checkDig(boolean n) {
         int k = 0;
         if (n) k = 2;
 
@@ -83,7 +92,7 @@ public class TictactoeManager {
         return true;
     }
 
-    public boolean boardFull() {
+    public boolean isTie() {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
                 if (board[i][j] == Piece.EMPTY) return false;

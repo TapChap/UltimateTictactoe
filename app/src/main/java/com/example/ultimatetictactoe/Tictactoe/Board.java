@@ -1,6 +1,5 @@
 package com.example.ultimatetictactoe.Tictactoe;
 
-import android.util.Log;
 import android.widget.ImageView;
 
 import java.util.function.BiConsumer;
@@ -12,30 +11,30 @@ public class Board extends TictactoeManager {
 
     private final String TAG = "Board";
 
-    public Board(ImageView[][] imageViews, int row, int col) {
+    public Board(ImageView[][] imageViews, Pose2d pose) {
         foreach((i, j) -> board[i][j] = imageViews[i][j]);
-        this.i = row;
-        this.j = col;
+        this.i = pose.i;
+        this.j = pose.j;
     }
 
     public Board(){}
 
     public void update(){
         foreach((i, j) -> {
-            Piece piece = get(i, j);
+            Piece piece = get(new Pose2d(i, j));
             board[i][j].setImageResource(piece.getImg());
         });
     }
 
-    public void setImage(int i, int j, ImageView image){
-        this.board[i][j] = image;
+    public void setImage(Pose2d pose, ImageView image){
+        this.board[pose.i][pose.j] = image;
     }
 
-    public int getRow(){
+    public int row(){
         return i;
     }
 
-    public int getCol(){
+    public int col(){
         return j;
     }
 

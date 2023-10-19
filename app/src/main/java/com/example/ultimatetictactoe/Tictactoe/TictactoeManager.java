@@ -21,16 +21,16 @@ public class TictactoeManager {
         }
     }
 
-    public void set(int i, int j) {
-        set(i, j, isX ? Piece.X : Piece.O);
+    public void set(Pose2d pose) {
+        set(pose, isX ? Piece.X : Piece.O);
     }
 
-    public void set(int i, int j, Piece piece) {
-        this.board[i][j] = piece;
+    public void set(Pose2d pose, Piece piece) {
+        this.board[pose.i][pose.j] = piece;
     }
 
-    public Piece get(int i, int j) {
-        return board[i][j];
+    public Piece get(Pose2d pose) {
+        return board[pose.i][pose.j];
     }
 
     public Piece getTurn() {

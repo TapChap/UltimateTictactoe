@@ -14,11 +14,11 @@
         android:id="@+id/mainGridLayout"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="50dp"
+        app:layout_constraintBottom_toTopOf="@id/turnDisplay"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25">
+        app:layout_constraintTop_toTopOf="parent">
 
         <!--        main grid-->
         <ImageView
@@ -28,7 +28,7 @@
             android:background="@drawable/rounded_line_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.32"
+            app:layout_constraintHorizontal_bias="0.333"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,7 +39,7 @@
             android:background="@drawable/rounded_line_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.68"
+            app:layout_constraintHorizontal_bias="0.666"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -1452,7 +1452,7 @@
             android:layout_height="120dp"
             app:layout_constraintBottom_toTopOf="@+id/mainLine_Top"
             app:layout_constraintEnd_toStartOf="@+id/mainLine_Right"
-            app:layout_constraintStart_toStartOf="@+id/mainLine_Left"
+            app:layout_constraintStart_toEndOf="@+id/mainLine_Left"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
 
@@ -1475,7 +1475,7 @@
             app:layout_constraintBottom_toTopOf="@+id/mainLine_Bottom"
             app:layout_constraintEnd_toStartOf="@+id/mainLine_Left"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/mainLine_Top"
+            app:layout_constraintTop_toBottomOf="@+id/mainLine_Top"
             tools:srcCompat="@tools:sample/avatars" />
 
         <!--        middle middle board image-->
@@ -1485,8 +1485,8 @@
             android:layout_height="120dp"
             app:layout_constraintBottom_toTopOf="@+id/mainLine_Bottom"
             app:layout_constraintEnd_toStartOf="@+id/mainLine_Right"
-            app:layout_constraintStart_toStartOf="@+id/mainLine_Left"
-            app:layout_constraintTop_toTopOf="@+id/mainLine_Top"
+            app:layout_constraintStart_toEndOf="@+id/mainLine_Left"
+            app:layout_constraintTop_toBottomOf="@+id/mainLine_Top"
             tools:srcCompat="@tools:sample/avatars" />
 
         <!--        middle right board image-->
@@ -1497,7 +1497,7 @@
             app:layout_constraintBottom_toTopOf="@+id/mainLine_Bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/mainLine_Right"
-            app:layout_constraintTop_toTopOf="@+id/mainLine_Top"
+            app:layout_constraintTop_toBottomOf="@+id/mainLine_Top"
             tools:srcCompat="@tools:sample/avatars"
             />
 
@@ -1510,7 +1510,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/mainLine_Left"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/mainLine_Bottom"
+            app:layout_constraintTop_toBottomOf="@id/mainLine_Bottom"
             tools:srcCompat="@tools:sample/avatars" />
 
         <!--        bottom middle board image-->
@@ -1520,7 +1520,7 @@
             android:layout_height="120dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/mainLine_Right"
-            app:layout_constraintStart_toStartOf="@+id/mainLine_Left"
+            app:layout_constraintStart_toEndOf="@+id/mainLine_Left"
             app:layout_constraintTop_toBottomOf="@id/mainLine_Bottom"
             tools:srcCompat="@tools:sample/avatars" />
 
@@ -1537,79 +1537,88 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <ImageView
+        android:id="@+id/turnDisplay"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        app:layout_constraintBottom_toTopOf="@+id/controlPanelLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainGridLayout"
+        tools:srcCompat="@tools:sample/avatars" />
+
     <GridLayout
+        android:id="@+id/controlPanelLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="45dp"
         android:columnCount="3"
         android:rowCount="3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainGridLayout">
+        app:layout_constraintTop_toBottomOf="@+id/turnDisplay"
+        app:layout_constraintVertical_bias="0.85">
 
-            <Button
-                android:id="@+id/b00"
-                android:layout_width="70dp"
-                android:layout_height="65dp"
-                android:backgroundTint="@color/blackIsh"
-                />
+        <Button
+            android:id="@+id/b00"
+            android:layout_width="70dp"
+            android:layout_height="65dp"
+            android:backgroundTint="@color/blackIsh" />
 
-            <Button
-                android:id="@+id/b01"
-                android:layout_width="70dp"
-                android:layout_height="65dp"
-                android:backgroundTint="@color/blackIsh"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                />
+        <Button
+            android:id="@+id/b01"
+            android:layout_width="70dp"
+            android:layout_height="65dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:backgroundTint="@color/blackIsh" />
 
-            <Button
-                android:id="@+id/b02"
-                android:layout_width="70dp"
-                android:layout_height="65dp"
-                android:backgroundTint="@color/blackIsh" />
+        <Button
+            android:id="@+id/b02"
+            android:layout_width="70dp"
+            android:layout_height="65dp"
+            android:backgroundTint="@color/blackIsh" />
 
-            <Button
-                android:id="@+id/b10"
-                android:layout_width="70dp"
-                android:layout_height="65dp"
-                android:backgroundTint="@color/blackIsh" />
+        <Button
+            android:id="@+id/b10"
+            android:layout_width="70dp"
+            android:layout_height="65dp"
+            android:backgroundTint="@color/blackIsh" />
 
-            <Button
-                android:id="@+id/b11"
-                android:layout_width="70dp"
-                android:layout_height="65dp"
-                android:backgroundTint="@color/blackIsh"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                />
+        <Button
+            android:id="@+id/b11"
+            android:layout_width="70dp"
+            android:layout_height="65dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:backgroundTint="@color/blackIsh" />
 
-            <Button
-                android:id="@+id/b12"
-                android:layout_width="70dp"
-                android:layout_height="65dp"
-                android:backgroundTint="@color/blackIsh" />
+        <Button
+            android:id="@+id/b12"
+            android:layout_width="70dp"
+            android:layout_height="65dp"
+            android:backgroundTint="@color/blackIsh" />
 
-            <Button
-                android:id="@+id/b20"
-                android:layout_width="70dp"
-                android:layout_height="65dp"
-                android:backgroundTint="@color/blackIsh" />
+        <Button
+            android:id="@+id/b20"
+            android:layout_width="70dp"
+            android:layout_height="65dp"
+            android:backgroundTint="@color/blackIsh" />
 
-            <Button
-                android:id="@+id/b21"
-                android:layout_width="70dp"
-                android:layout_height="65dp"
-                android:backgroundTint="@color/blackIsh"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                />
+        <Button
+            android:id="@+id/b21"
+            android:layout_width="70dp"
+            android:layout_height="65dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:backgroundTint="@color/blackIsh" />
 
-            <Button
-                android:id="@+id/b22"
-                android:layout_width="70dp"
-                android:layout_height="65dp"
-                android:backgroundTint="@color/blackIsh" />
+        <Button
+            android:id="@+id/b22"
+            android:layout_width="70dp"
+            android:layout_height="65dp"
+            android:backgroundTint="@color/blackIsh" />
     </GridLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

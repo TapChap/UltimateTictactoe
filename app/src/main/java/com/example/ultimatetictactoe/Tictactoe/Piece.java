@@ -26,17 +26,6 @@ public enum Piece {
         }
     }
 
-    public int getLargeImg(){
-        switch(this.piece){
-            case 'X':
-                return R.drawable.large_x;
-            case 'O':
-                return R.drawable.large_o;
-            default:
-                return R.drawable.empty;
-        }
-    }
-
     public boolean equals(Piece other){
         return this.piece == other.piece;
     }

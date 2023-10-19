@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:layout_marginTop="50dp"
-        app:layout_constraintBottom_toTopOf="@id/turnDisplay"
+        app:layout_constraintBottom_toTopOf="@id/winnerLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -1537,15 +1537,34 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/turnDisplay"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
+    <RelativeLayout
+        android:id="@+id/winnerLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/controlPanelLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainGridLayout"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toBottomOf="@+id/mainGridLayout">
+
+    <ImageView
+            android:id="@+id/turnDisplay"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/winnerDisplay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_toEndOf="@+id/turnDisplay"
+            android:fontFamily="@font/assistant_bold"
+            android:layout_centerVertical="true"
+            android:text="Won!"
+            android:textSize="25sp"
+            android:visibility="gone" />
+
+    </RelativeLayout>
 
     <GridLayout
         android:id="@+id/controlPanelLayout"
@@ -1557,37 +1576,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/turnDisplay"
+        app:layout_constraintTop_toBottomOf="@+id/winnerLayout"
         app:layout_constraintVertical_bias="0.85">
 
         <Button
-            android:id="@+id/b00"
+            android:id="@+id/button00"
             android:layout_width="70dp"
             android:layout_height="65dp"
             android:backgroundTint="@color/blackIsh" />
 
         <Button
-            android:id="@+id/b01"
-            android:layout_width="70dp"
-            android:layout_height="65dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:backgroundTint="@color/blackIsh" />
-
-        <Button
-            android:id="@+id/b02"
-            android:layout_width="70dp"
-            android:layout_height="65dp"
-            android:backgroundTint="@color/blackIsh" />
-
-        <Button
-            android:id="@+id/b10"
-            android:layout_width="70dp"
-            android:layout_height="65dp"
-            android:backgroundTint="@color/blackIsh" />
-
-        <Button
-            android:id="@+id/b11"
+            android:id="@+id/button01"
             android:layout_width="70dp"
             android:layout_height="65dp"
             android:layout_marginStart="10dp"
@@ -1595,19 +1594,19 @@
             android:backgroundTint="@color/blackIsh" />
 
         <Button
-            android:id="@+id/b12"
+            android:id="@+id/button02"
             android:layout_width="70dp"
             android:layout_height="65dp"
             android:backgroundTint="@color/blackIsh" />
 
         <Button
-            android:id="@+id/b20"
+            android:id="@+id/button10"
             android:layout_width="70dp"
             android:layout_height="65dp"
             android:backgroundTint="@color/blackIsh" />
 
         <Button
-            android:id="@+id/b21"
+            android:id="@+id/button11"
             android:layout_width="70dp"
             android:layout_height="65dp"
             android:layout_marginStart="10dp"
@@ -1615,7 +1614,27 @@
             android:backgroundTint="@color/blackIsh" />
 
         <Button
-            android:id="@+id/b22"
+            android:id="@+id/button12"
+            android:layout_width="70dp"
+            android:layout_height="65dp"
+            android:backgroundTint="@color/blackIsh" />
+
+        <Button
+            android:id="@+id/button20"
+            android:layout_width="70dp"
+            android:layout_height="65dp"
+            android:backgroundTint="@color/blackIsh" />
+
+        <Button
+            android:id="@+id/button21"
+            android:layout_width="70dp"
+            android:layout_height="65dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:backgroundTint="@color/blackIsh" />
+
+        <Button
+            android:id="@+id/button22"
             android:layout_width="70dp"
             android:layout_height="65dp"
             android:backgroundTint="@color/blackIsh" />

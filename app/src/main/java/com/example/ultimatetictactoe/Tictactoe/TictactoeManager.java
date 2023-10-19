@@ -8,10 +8,10 @@ public class TictactoeManager {
     private Piece winner = Piece.EMPTY;
 
     public TictactoeManager() {
-        restart();
+        reset();
     }
 
-    public void restart() {
+    public void reset() {
         isX = true;
 
         for (int i = 0; i < board.length; i++) {
@@ -49,6 +49,10 @@ public class TictactoeManager {
             return true;
         }
         return false;
+    }
+
+    public boolean hasWon(){
+        return hasWon(getTurn());
     }
 
     public Piece getWinner(){

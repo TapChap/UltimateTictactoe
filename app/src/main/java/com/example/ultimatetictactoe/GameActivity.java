@@ -83,14 +83,22 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
                     // disable clicks & update board image if won board
                     if (selectedBoard.hasWon(mainBoard.getTurn())) {
-                        mainImages[currentPose.i][currentPose.j].setImageResource(boards[currentPose.i][currentPose.j].getWinner().getImg());
+                        mainBoard.set(currentPose);
+                        mainBoard.update();
                         mainImages[currentPose.i][currentPose.j].setClickable(false);
                         mainImages[currentPose.i][currentPose.j].setTag("image");
                     } else if (selectedBoard.isTie()) {
                         selectedBoard.reset();
                         selectedBoard.update();
-                    } else if (mainBoard.hasWon()) winnerDisplay.setVisibility(View.VISIBLE);
+                    }
 
+                    // check if the entire game was won
+                    if (mainBoard.hasWon()) {
+                        winnerDisplay.setVisibility(View.VISIBLE);
+                        setControlPanelEnabled(false);
+                        disableMainImages();
+                        return;
+                    }
 
                     // checking if the next board can be played
                     if (boards[i][j].hasWon(Piece.EMPTY) || boards[i][j].isTie()){
@@ -129,12 +137,19 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
+    private void disableMainImages() {
+        for (int i = 0; i < mainImages.length; i++) {
+            for (int j = 0; j < mainImages[i].length; j++) {
+                mainImages[i][j].setClickable(false);
+            }
+        }
+    }
 
     private void disableButtons(ArrayList<Button> buttons){
-        for (Button button : buttons) {
+        buttons.forEach((button -> {
             button.setEnabled(false);
             button.setAlpha(0.25f);
-        }
+        }));
     }
 
     private ArrayList<Button> getTakenCells(Board board){

@@ -41,7 +41,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.666"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
         <ImageView
             android:id="@+id/mainLine_Top"
@@ -1558,11 +1559,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_toEndOf="@+id/turnDisplay"
-            android:fontFamily="@font/assistant_bold"
             android:layout_centerVertical="true"
             android:text="Won!"
-            android:textSize="25sp"
-            android:visibility="gone" />
+            android:textSize="40sp"
+            android:textColor="#000000"
+            android:visibility="gone"
+            android:fontFamily="@font/assistant_bold"
+            />
 
     </RelativeLayout>
 

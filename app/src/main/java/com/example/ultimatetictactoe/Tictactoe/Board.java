@@ -33,8 +33,8 @@ public class Board extends TictactoeManager {
         return pose;
     }
 
-    public ImageView getBoardImage(){
-        return board[pose.i][pose.j];
+    public ImageView getBoardImage(Pose2d imgPose){
+        return board[imgPose.i][imgPose.j];
     }
 
     /**

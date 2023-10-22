@@ -85,8 +85,8 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                     // disable clicks & update image if won inner board
                     if (selectedBoard.hasWon(mainBoard.getTurn())) {
                         mainBoard.setPiece(currentPose);
-                        mainBoard.getBoardImage().setClickable(false);
-                        mainBoard.getBoardImage().setTag("image");
+                        mainBoard.getBoardImage(currentPose).setClickable(false);
+                        mainBoard.getBoardImage(currentPose).setTag("image");
                         mainBoard.update();
                     } else if (selectedBoard.isTie()) {
                         selectedBoard.reset();
@@ -124,18 +124,17 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         int id = view.getId();
 
         // main image pressed
-        if (motionEvent.getAction() != MotionEvent.ACTION_DOWN) {
+        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
             foreach((i, j) -> {
-                    if (mainImages[i][j].getId() == id) {
-                        Toast.makeText(this, i + ", " + j, Toast.LENGTH_SHORT).show();
-                        if (canChoose && !boards[i][j].hasWon(Piece.EMPTY)) {
-                            selectedBoard = boards[i][j];
-                            updateIndicator(new Pose2d(i, j));
-                            setControlPanelEnabled(true);
-                            disableButtons(getTakenCells(boards[i][j]));
-                        }
+                if (mainImages[i][j].getId() == id) {
+                    if (canChoose && !boards[i][j].hasWon(Piece.EMPTY)) {
+                        selectedBoard = boards[i][j];
+                        updateIndicator(new Pose2d(i, j));
+                        setControlPanelEnabled(true);
+                        disableButtons(getTakenCells(boards[i][j]));
                     }
-                });
+                }
+            });
             return true;
         }
         return false;
@@ -195,8 +194,8 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     }
 
     private void foreach(BiConsumer<Integer, Integer> consumer) {
-        for (int i = 0; i < boards.length; i++) {
-            for (int j = 0; j < boards[i].length; j++) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
                 consumer.accept(i, j);
             }
         }

@@ -33,7 +33,10 @@ public class Board extends TictactoeManager {
         return pose;
     }
 
-    // foreach methods
+    public ImageView getBoardImage(){
+        return board[pose.i][pose.j];
+    }
+
     /**
      * supplies all the indexes in the board
      *

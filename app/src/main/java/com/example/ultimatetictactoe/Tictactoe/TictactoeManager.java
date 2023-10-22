@@ -21,11 +21,11 @@ public class TictactoeManager {
         }
     }
 
-    public void set(Pose2d pose) {
-        set(pose, isX ? Piece.X : Piece.O);
+    public void setPiece(Pose2d pose) {
+        setPiece(pose, isX ? Piece.X : Piece.O);
     }
 
-    public void set(Pose2d pose, Piece piece) {
+    public void setPiece(Pose2d pose, Piece piece) {
         this.board[pose.i][pose.j] = piece;
     }
 

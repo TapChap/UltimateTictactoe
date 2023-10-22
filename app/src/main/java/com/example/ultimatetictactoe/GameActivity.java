@@ -3,18 +3,19 @@ package com.example.ultimatetictactoe;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ultimatetictactoe.Tictactoe.Board;
 import com.example.ultimatetictactoe.Tictactoe.Piece;
 import com.example.ultimatetictactoe.Tictactoe.Pose2d;
 
 import java.util.ArrayList;
+import java.util.function.BiConsumer;
 
 public class GameActivity extends AppCompatActivity implements View.OnTouchListener, View.OnClickListener {
     private final String TAG = "GameActivity";
@@ -71,24 +72,22 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     public void onClick(View view) {
         int id = view.getId();
 
-        for (int i = 0; i < buttons.length; i++) {
-            for (int j = 0; j < buttons[i].length; j++) {
-
-                // control panel button pressed
+        foreach((i, j) -> {
+            // control panel button pressed
                 if (buttons[i][j].getId() == id) {
                     Pose2d nextPose = new Pose2d(i, j); // the pose of the next pose
                     Pose2d currentPose = selectedBoard.getPose(); // the pose of the selected board
 
                     setControlPanelEnabled(true);
-                    selectedBoard.set(nextPose, mainBoard.getTurn());
-                    selectedBoard.update();
+                    selectedBoard.setPiece(nextPose, mainBoard.getTurn());
+                    selectedBoard.update(); // update the image in the board that was just played
 
-                    // disable clicks & update board image if won board
+                    // disable clicks & update image if won inner board
                     if (selectedBoard.hasWon(mainBoard.getTurn())) {
-                        mainBoard.set(currentPose);
+                        mainBoard.setPiece(currentPose);
+                        mainBoard.getBoardImage().setClickable(false);
+                        mainBoard.getBoardImage().setTag("image");
                         mainBoard.update();
-                        mainImages[currentPose.i][currentPose.j].setClickable(false);
-                        mainImages[currentPose.i][currentPose.j].setTag("image");
                     } else if (selectedBoard.isTie()) {
                         selectedBoard.reset();
                         selectedBoard.update();
@@ -117,8 +116,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                     mainBoard.next();
                     turnDisplay.setImageResource(mainBoard.getTurn().getImg());
                 }
-            }
-        }
+            });
     }
 
     @Override
@@ -126,10 +124,10 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         int id = view.getId();
 
         // main image pressed
-        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-            for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 3; j++) {
+        if (motionEvent.getAction() != MotionEvent.ACTION_DOWN) {
+            foreach((i, j) -> {
                     if (mainImages[i][j].getId() == id) {
+                        Toast.makeText(this, i + ", " + j, Toast.LENGTH_SHORT).show();
                         if (canChoose && !boards[i][j].hasWon(Piece.EMPTY)) {
                             selectedBoard = boards[i][j];
                             updateIndicator(new Pose2d(i, j));
@@ -137,28 +135,21 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                             disableButtons(getTakenCells(boards[i][j]));
                         }
                     }
-                }
-            }
+                });
             return true;
         }
         return false;
     }
 
     private void setControlPanelEnabled(boolean enabled) {
-        for (int i = 0; i < buttons.length; i++) {
-            for (int j = 0; j < buttons[i].length; j++) {
-                buttons[i][j].setEnabled(enabled);
-                buttons[i][j].setAlpha(enabled ? 1f : 0.25f);
-            }
-        }
+        foreach((i, j) -> {
+            buttons[i][j].setEnabled(enabled);
+            buttons[i][j].setAlpha(enabled ? 1f : 0.25f);
+        });
     }
 
     private void disableMainImages() {
-        for (int i = 0; i < mainImages.length; i++) {
-            for (int j = 0; j < mainImages[i].length; j++) {
-                mainImages[i][j].setClickable(false);
-            }
-        }
+     foreach((i, j) -> mainImages[i][j].setClickable(false));
     }
 
     private void disableButtons(ArrayList<Button> buttons) {
@@ -171,11 +162,9 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     private ArrayList<Button> getTakenCells(Board board) {
         ArrayList<Button> takenButtons = new ArrayList<>();
 
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (board.get(new Pose2d(i, j)) != Piece.EMPTY) takenButtons.add(buttons[i][j]);
-            }
-        }
+        foreach((i, j) -> {
+            if (board.get(new Pose2d(i, j)) != Piece.EMPTY) takenButtons.add(buttons[i][j]);
+        });
 
         return takenButtons;
     }
@@ -203,5 +192,13 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         }
 
         return board;
+    }
+
+    private void foreach(BiConsumer<Integer, Integer> consumer) {
+        for (int i = 0; i < boards.length; i++) {
+            for (int j = 0; j < boards[i].length; j++) {
+                consumer.accept(i, j);
+            }
+        }
     }
 }

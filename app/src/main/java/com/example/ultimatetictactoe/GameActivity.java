@@ -3,6 +3,8 @@ package com.example.ultimatetictactoe;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -14,7 +16,7 @@ import com.example.ultimatetictactoe.Tictactoe.Pose2d;
 
 import java.util.ArrayList;
 
-public class GameActivity extends AppCompatActivity implements View.OnClickListener {
+public class GameActivity extends AppCompatActivity implements View.OnTouchListener, View.OnClickListener {
     private final String TAG = "GameActivity";
 
     private Board[][] boards = new Board[3][3];
@@ -49,7 +51,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                 buttons[i][j].setOnClickListener(this);
 
                 mainImages[i][j] = findViewById(resIdB);
-                mainImages[i][j].setOnClickListener(this);
+                mainImages[i][j].setOnTouchListener(this);
                 mainImages[i][j].setTag("");
 
                 mainBoard.setImage(new Pose2d(i, j), mainImages[i][j]);
@@ -101,7 +103,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     }
 
                     // checking if the next board can be played
-                    if (boards[i][j].hasWon(Piece.EMPTY) || boards[i][j].isTie()){
+                    if (boards[i][j].hasWon(Piece.EMPTY) || boards[i][j].isTie()) {
                         // allow the next player to choose the next board, if the previous board was won
                         setControlPanelEnabled(false);
                         canChoose = true;
@@ -115,28 +117,42 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                     mainBoard.next();
                     turnDisplay.setImageResource(mainBoard.getTurn().getImg());
                 }
+            }
+        }
+    }
 
-                // main image pressed
-                if (mainImages[i][j].getId() == id) {
-                    if (canChoose && !boards[i][j].hasWon(Piece.EMPTY)) {
-                        selectedBoard = boards[i][j];
-                        updateIndicator(new Pose2d(i, j));
-                        setControlPanelEnabled(true);
-                        disableButtons(getTakenCells(boards[i][j]));
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        int id = view.getId();
+
+        // main image pressed
+        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    if (mainImages[i][j].getId() == id) {
+                        if (canChoose && !boards[i][j].hasWon(Piece.EMPTY)) {
+                            selectedBoard = boards[i][j];
+                            updateIndicator(new Pose2d(i, j));
+                            setControlPanelEnabled(true);
+                            disableButtons(getTakenCells(boards[i][j]));
+                        }
                     }
                 }
             }
+            return true;
         }
+        return false;
     }
 
     private void setControlPanelEnabled(boolean enabled) {
         for (int i = 0; i < buttons.length; i++) {
             for (int j = 0; j < buttons[i].length; j++) {
                 buttons[i][j].setEnabled(enabled);
-                buttons[i][j].setAlpha(enabled? 1f: 0.25f);
+                buttons[i][j].setAlpha(enabled ? 1f : 0.25f);
             }
         }
     }
+
     private void disableMainImages() {
         for (int i = 0; i < mainImages.length; i++) {
             for (int j = 0; j < mainImages[i].length; j++) {
@@ -145,14 +161,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void disableButtons(ArrayList<Button> buttons){
+    private void disableButtons(ArrayList<Button> buttons) {
         buttons.forEach((button -> {
             button.setEnabled(false);
             button.setAlpha(0.25f);
         }));
     }
 
-    private ArrayList<Button> getTakenCells(Board board){
+    private ArrayList<Button> getTakenCells(Board board) {
         ArrayList<Button> takenButtons = new ArrayList<>();
 
         for (int i = 0; i < 3; i++) {
@@ -164,7 +180,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         return takenButtons;
     }
 
-    private void updateIndicator(Pose2d pose){
+    private void updateIndicator(Pose2d pose) {
         // delete the last one
         if (mainImages[indicatorPose.i][indicatorPose.j].getTag().equals("indicator"))
             mainImages[indicatorPose.i][indicatorPose.j].setImageResource(R.drawable.empty);

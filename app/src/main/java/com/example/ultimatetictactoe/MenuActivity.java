@@ -20,6 +20,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
         playButton.setOnClickListener(this);
         tutorialButton.setOnClickListener(this);
+
         exitButton.setOnClickListener(this);
     }
 
@@ -28,8 +29,6 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         int id = view.getId();
 
         if (id == R.id.MENUplayBtn) startActivity(new Intent(this, GameActivity.class));
-        if (id == R.id.MENUtutorialBtn) return;
-        if (id == R.id.MENUaboutBtn) return;
-        if (id == R.id.MENUexitBtn) return;
+        if (id == R.id.MENUtutorialBtn) startActivity(new Intent(this, SettingsActivity.class));
     }
 }

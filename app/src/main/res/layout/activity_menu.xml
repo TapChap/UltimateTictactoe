@@ -33,13 +33,13 @@
             android:text="Tutorial" />
 
         <Button
-            android:id="@+id/MENUaboutBtn"
+            android:id="@+id/server"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="about" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/client"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Button" />

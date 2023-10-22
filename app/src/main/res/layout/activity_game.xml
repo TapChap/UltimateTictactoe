@@ -1444,7 +1444,8 @@
             app:layout_constraintEnd_toStartOf="@+id/mainLine_Left"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            tools:srcCompat="@tools:sample/avatars"
+            />
 
         <!--        top middle board image-->
         <ImageView

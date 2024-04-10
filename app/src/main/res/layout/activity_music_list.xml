@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_setting"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="@color/cardview_shadow_start_color"
+    tools:context=".Music.MusicListActivity">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.00"
+        android:layoutDirection="ltr">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.00"
+                android:fontFamily="casual"
+                android:gravity="center_horizontal"
+                android:text=" Choose Song From Phone"
+                android:textSize="40sp"
+                android:textStyle="normal|bold" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/lvSongs"
+                android:layout_width="395dp"
+                android:layout_height="match_parent" />
+        </TableRow>
+
+    </TableLayout>
+
+</LinearLayout>

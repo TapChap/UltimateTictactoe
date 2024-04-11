@@ -5,8 +5,7 @@
     android:id="@+id/game_activity_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:backgroundTint="@color/white"
+    android:background="@drawable/bg_image"
     android:orientation="vertical"
     tools:context=".GameActivity">
 
@@ -70,7 +69,7 @@
 
         <!--        top left inner grid-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/TLinnerGrid"
+            android:id="@+id/Grid00"
             android:layout_width="116dp"
             android:layout_height="110dp"
             app:layout_constraintBottom_toTopOf="@+id/mainLine_Top"
@@ -219,7 +218,7 @@
 
         <!--        top middle inner grid-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/TMinnerGrid"
+            android:id="@+id/Grid01"
             android:layout_width="116dp"
             android:layout_height="110dp"
             app:layout_constraintBottom_toTopOf="@+id/mainLine_Top"
@@ -370,7 +369,7 @@
 
         <!--        top right inner grid-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/TRinnerGrid"
+            android:id="@+id/Grid02"
             android:layout_width="116dp"
             android:layout_height="110dp"
             app:layout_constraintBottom_toTopOf="@+id/mainLine_Top"
@@ -520,7 +519,7 @@
 
         <!--        middle left inner grid-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/MLinnerGrid"
+            android:id="@+id/Grid10"
             android:layout_width="116dp"
             android:layout_height="110dp"
             app:layout_constraintBottom_toTopOf="@+id/mainLine_Bottom"
@@ -672,7 +671,7 @@
 
         <!--        middle middle inner grid-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/MMinnerGrid"
+            android:id="@+id/Grid11"
             android:layout_width="116dp"
             android:layout_height="110dp"
             app:layout_constraintBottom_toTopOf="@+id/mainLine_Bottom"
@@ -825,7 +824,7 @@
 
         <!--        middle right inner grid-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/MRinnerGrid"
+            android:id="@+id/Grid12"
             android:layout_width="116dp"
             android:layout_height="110dp"
             app:layout_constraintBottom_toTopOf="@+id/mainLine_Bottom"
@@ -977,7 +976,7 @@
 
         <!--        bottom left inner grid-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/BLinnerGrid"
+            android:id="@+id/Grid20"
             android:layout_width="116dp"
             android:layout_height="110dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -1127,7 +1126,7 @@
 
         <!--        bottom middle inner grid-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/BMinnerGrid"
+            android:id="@+id/Grid21"
             android:layout_width="116dp"
             android:layout_height="110dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -1276,7 +1275,7 @@
 
         <!--        bottom right inner grid-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/BRinnerGrid"
+            android:id="@+id/Grid22"
             android:layout_width="116dp"
             android:layout_height="110dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -1578,7 +1577,7 @@
             android:id="@+id/button00"
             android:layout_width="70dp"
             android:layout_height="65dp"
-            android:backgroundTint="@color/blackIsh" />
+            android:backgroundTint="@color/blue" />
 
         <Button
             android:id="@+id/button01"
@@ -1586,19 +1585,19 @@
             android:layout_height="65dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:backgroundTint="@color/blackIsh" />
+            android:backgroundTint="@color/blue" />
 
         <Button
             android:id="@+id/button02"
             android:layout_width="70dp"
             android:layout_height="65dp"
-            android:backgroundTint="@color/blackIsh" />
+            android:backgroundTint="@color/blue" />
 
         <Button
             android:id="@+id/button10"
             android:layout_width="70dp"
             android:layout_height="65dp"
-            android:backgroundTint="@color/blackIsh" />
+            android:backgroundTint="@color/blue" />
 
         <Button
             android:id="@+id/button11"
@@ -1606,19 +1605,19 @@
             android:layout_height="65dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:backgroundTint="@color/blackIsh" />
+            android:backgroundTint="@color/blue" />
 
         <Button
             android:id="@+id/button12"
             android:layout_width="70dp"
             android:layout_height="65dp"
-            android:backgroundTint="@color/blackIsh" />
+            android:backgroundTint="@color/blue" />
 
         <Button
             android:id="@+id/button20"
             android:layout_width="70dp"
             android:layout_height="65dp"
-            android:backgroundTint="@color/blackIsh" />
+            android:backgroundTint="@color/blue" />
 
         <Button
             android:id="@+id/button21"
@@ -1626,13 +1625,13 @@
             android:layout_height="65dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:backgroundTint="@color/blackIsh" />
+            android:backgroundTint="@color/blue" />
 
         <Button
             android:id="@+id/button22"
             android:layout_width="70dp"
             android:layout_height="65dp"
-            android:backgroundTint="@color/blackIsh" />
+            android:backgroundTint="@color/blue" />
     </GridLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

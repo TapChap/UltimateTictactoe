@@ -8,10 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="primary_color">#F1F6F9</color>
-    <color name="accent_color">#9BA4B5</color>
-    <color name="primary_backround">#394867</color>
-    <color name="accent_backround">#212A3E</color>
-<!--    <color name="blackIsh">#171717</color>-->
-    <color name="blackIsh">#117FED</color>
+    <color name="blue">#117FED</color>
 </resources>

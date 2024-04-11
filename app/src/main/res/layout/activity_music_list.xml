@@ -5,6 +5,7 @@
     android:id="@+id/activity_setting"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_image"
     tools:context=".Music.MusicListActivity">
 
     <TableLayout
@@ -24,6 +25,7 @@
                 android:fontFamily="@font/assistant_bold"
                 android:gravity="center_horizontal"
                 android:text=" Choose Song From Phone"
+                android:textColor="@color/black"
                 android:textSize="45sp"
                 android:textStyle="normal|bold" />
         </TableRow>
@@ -34,7 +36,7 @@
 
             <ListView
                 android:id="@+id/lvSongs"
-                android:layout_width="395dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </TableRow>
 

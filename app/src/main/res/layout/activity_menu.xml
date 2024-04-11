@@ -5,52 +5,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MenuActivity"
-    >
+    android:background="@drawable/bg_image">
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="172dp"
-        android:layout_height="wrap_content"
+        android:layout_width="263dp"
+        android:layout_height="342dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.9">
 
         <Button
             android:id="@+id/MENUplayContactBtn"
-            android:layout_width="173dp"
-            android:layout_height="wrap_content"
-            android:text="Play contact" />
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Play with contact"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/MENUplayGuestBtn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="play guest" />
+            android:layout_height="60dp"
+            android:text="play as guest"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/MENUexitBtn"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="150dp"
             android:text="exit" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="219dp"
-        android:layout_height="wrap_content"
+        android:layout_width="383dp"
+        android:layout_height="49dp"
+        android:fontFamily="@font/assistant_bold"
         android:text="Ultimate Tictactoe"
         android:textAlignment="center"
-        android:textSize="25sp"
+        android:textColor="@color/black"
+        android:textSize="45sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.511" />
+        app:layout_constraintVertical_bias="0.506" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

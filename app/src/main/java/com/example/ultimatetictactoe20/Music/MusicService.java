@@ -51,12 +51,6 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         getSongs();
     }
 
-    public void pauseMusic() {
-        player.pause();
-        stopService(new Intent(playIntent));
-        isStopped = true;
-        positionPausedInSong = player.getCurrentPosition();
-    }
 
     public void getSongs() {
         //enter to list of songs from phone storege
@@ -117,8 +111,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         Song songToPlay = valuesList.get(songPosn);
         long songId = songToPlay.getId();
 
-        Uri trackUri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                songId);
+        Uri trackUri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, songId);
         try {
             player.setDataSource(getApplicationContext(), trackUri);
         } catch (Exception e) {
@@ -131,8 +124,8 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
             mediaPlayer.setLooping(true);
             mediaPlayer.start();
         }));
-        isStopped = false;
 
+        isStopped = false;
     }
 
     public void setList(ArrayList<Song> theSongs) {

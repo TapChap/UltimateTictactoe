@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><!-- res/drawable/rounded_line.xml -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <solid android:color="#707070" /> <!-- Line color -->
+    <solid android:color="@color/black" /> <!-- Line color  "#707070" -->
     <corners android:radius="8dp" /> <!-- Adjust the radius to control corner roundness -->
     <size android:width="400dp" android:height="4dp" /> <!-- Line thickness and height -->
 </shape>

@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.ultimatetictactoe20.Tictactoe.Board;
 import com.example.ultimatetictactoe20.Tictactoe.Piece;
@@ -31,6 +32,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     private boolean canChoose;
 
     private final Button[][] buttons = new Button[3][3];
+    private final ConstraintLayout[][] boardLayouts = new ConstraintLayout[3][3];
     private ImageView turnDisplay;
     private TextView winnerDisplay;
 
@@ -56,9 +58,9 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         contactName = incoming.getStringExtra("CONTACT_NAME");
 
         batteryReceiver = new LowBatteryReceiver(this::saveGame, hasContact);
+        registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
         database = new Database(this);
-        registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
         for (int i = 0; i < Math.pow(boards.length, 2); i++) {
             boards[i / 3][i % 3] = new Board(getBoard(i), new Pose2d(i / 3, i % 3));
@@ -67,16 +69,20 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 String strA = "button" + i + j;
-                String strB = "boardImage" + i + j;
                 int resIdA = getResources().getIdentifier(strA, "id", getPackageName());
-                int resIdB = getResources().getIdentifier(strB, "id", getPackageName());
                 buttons[i][j] = findViewById(resIdA);
                 buttons[i][j].setOnClickListener(this);
 
-                mainBoard.setImage(new Pose2d(i, j), findViewById(resIdB));
+                String strB = "boardImage" + i + j;
+                int resIdB = getResources().getIdentifier(strB, "id", getPackageName());
                 Pose2d pose = new Pose2d(i, j);
+                mainBoard.setImage(pose, findViewById(resIdB));
                 mainBoard.getBoardImage(pose).setOnTouchListener(this);
                 mainBoard.getBoardImage(pose).setTag("");
+
+                String strC = "Grid" + i + j;
+                int resIdC = getResources().getIdentifier(strC, "id", getPackageName());
+                boardLayouts[i][j] = findViewById(resIdC);
             }
         }
 
@@ -112,6 +118,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                         mainBoard.getBoardImage(currentPose).setClickable(false);
                         mainBoard.getBoardImage(currentPose).setTag("image");
                         mainBoard.update();
+                        boardLayouts[currentPose.i][currentPose.j].setVisibility(View.INVISIBLE);
                     } else if (selectedBoard.isTie()) {
                         selectedBoard.reset();
                         selectedBoard.update();
@@ -121,18 +128,16 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                     if (mainBoard.hasWon()) {
                         winnerDisplay.setVisibility(View.VISIBLE);
                         setControlPanelEnabled(false);
-                        disableMainImages();
                         database.remove(contactName);
                         return;
                     }
 
                     // check if the entire game was tied
                     if (mainBoard.isTie()) {
-                        winnerDisplay.setVisibility(View.VISIBLE);
                         winnerDisplay.setText("It's a Tie!");
+                        winnerDisplay.setVisibility(View.VISIBLE);
                         turnDisplay.setVisibility(View.GONE);
                         setControlPanelEnabled(false);
-                        disableMainImages();
                         database.remove(contactName);
                         return;
                     }
@@ -166,7 +171,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
             foreach((i, j) -> {
                 if (mainBoard.getBoardImage(new Pose2d(i, j)).getId() == id) {
-                    if (canChoose && !boards[i][j].hasWon(Piece.EMPTY)) {
+                    if (canChoose && !boards[i][j].hasWon() && !mainBoard.hasWon()) {
                         selectedBoard = boards[i][j];
                         updateIndicator(new Pose2d(i, j));
                         setControlPanelEnabled(true);
@@ -184,10 +189,6 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
             buttons[i][j].setEnabled(enabled);
             buttons[i][j].setAlpha(enabled ? 1f : 0.25f);
         });
-    }
-
-    private void disableMainImages() {
-     foreach((i, j) -> mainBoard.getBoardImage(new Pose2d(i, j)) .setClickable(false));
     }
 
     private void disableButtons(ArrayList<Button> buttons) {

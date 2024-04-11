@@ -5,21 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SplachActivity"
-    android:backgroundTint="@color/primary_backround"
-    android:background="@color/primary_backround">
+    android:background="@drawable/bg_image"
+    >
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/assistant_bold"
         android:text="Loading app..."
-        android:textSize="24sp"
+        android:textSize="34sp"
+        android:textColor="@color/black"
 
         app:layout_constraintBottom_toTopOf="@+id/gridLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.797"
-        />
+        app:layout_constraintVertical_bias="0.797" />
 
     <GridLayout
         android:id="@+id/gridLayout"

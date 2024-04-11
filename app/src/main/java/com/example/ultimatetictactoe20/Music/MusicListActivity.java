@@ -50,9 +50,9 @@ public class MusicListActivity extends AppCompatActivity {
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, songsNames);
         lvSongs.setAdapter(adapter);
         lvSongs.setOnItemClickListener((adapterView, view, i, l) -> {
-            // change playing song to the chosen song
             MenuActivity.musicService.setSong(songsNames.size() - 1 - i);
             MenuActivity.musicService.playSong();
+            MenuActivity.isPlaying = true;
             finish();
         });
 
@@ -83,7 +83,6 @@ public class MusicListActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        if (MenuActivity.isPlaying)
-            MenuActivity.musicService.resume();
+        if (MenuActivity.isPlaying) MenuActivity.musicService.resume();
     }
 }

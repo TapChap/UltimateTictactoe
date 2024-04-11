@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/turnOffMusicBtth"
-        android:title="turn off music"
+        android:id="@+id/toggleMusicBttn"
+        android:title="MUTE"
         />
 
     <item

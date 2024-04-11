@@ -13,22 +13,25 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
+import com.example.ultimatetictactoe20.Music.MusicListActivity;
 import com.example.ultimatetictactoe20.Music.MusicService;
 
 import java.util.concurrent.atomic.AtomicReference;
 
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private SwitchCompat musicSwitch;
     public static MusicService musicService;
     private Intent playIntent;
     public static boolean isPlaying;
@@ -53,9 +56,6 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         exitButton.setOnClickListener(this);
 
         // music
-        musicSwitch = findViewById(R.id.musicSwtch);
-        musicSwitch.setOnClickListener(this);
-
         musicService = new MusicService();
         isPlaying = false;
 
@@ -68,7 +68,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         // contacts
         initContact();
 
-        new Handler().postDelayed(()-> musicService.pause(), 1000L);
+//        new Handler().postDelayed(()-> musicService.pause(), 1000L);
     }
 
     private void initContact(){
@@ -108,6 +108,13 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final int CONTACT_PICK_REQUEST_CODE = 1001; // You can use any unique integer value
 
+    private void stopMusic(){
+        if (!isPlaying) return;
+        stopService(playIntent);
+        MusicService.stopPlayMusic();
+        isPlaying = false;
+    }
+
     @Override
     public void onClick(View view) {
         int id = view.getId();
@@ -132,21 +139,8 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 //        }
 
         if (view.getId() == R.id.MENUexitBtn) {
-            stopService(playIntent);
-            MusicService.stopPlayMusic();
-            isPlaying = false;
+            stopMusic();
             finishAffinity();
-        }
-
-        if (view.getId() == R.id.musicSwtch) {
-            if (!musicSwitch.isChecked()) {
-                musicService.pause();
-                musicSwitch.setChecked(false);
-            } else {
-                musicService.resume();
-                musicSwitch.setChecked(true);
-            }
-            MenuActivity.isPlaying = !MenuActivity.isPlaying;
         }
     }
 
@@ -174,5 +168,22 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.music_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        super.onOptionsItemSelected(item);
+
+        if (item.getItemId() == R.id.turnOffMusicBtth) stopMusic();
+        if (item.getItemId() == R.id.changeMusicBttn) startActivity(new Intent(this, MusicListActivity.class));
+        if (item.getItemId() == R.id.eraseMemoryBttn) this.deleteDatabase("memory_db.db");
+
+        return true;
     }
 }

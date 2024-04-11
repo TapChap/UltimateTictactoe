@@ -1551,7 +1551,7 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/turnDisplay"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
+            android:layout_marginStart="15dp"
             android:text="Won!"
             android:textSize="40sp"
             android:textColor="#000000"

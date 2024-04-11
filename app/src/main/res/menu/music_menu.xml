@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/turnOffMusicBtth"
+        android:title="turn off music"
+        />
+
+    <item
+        android:id="@+id/changeMusicBttn"
+        android:title="change music"
+        />
+
+    <item
+        android:id="@+id/eraseMemoryBttn"
+        android:title="erase memory"
+        />
+</menu>

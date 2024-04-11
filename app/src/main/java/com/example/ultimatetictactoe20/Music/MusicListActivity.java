@@ -2,6 +2,7 @@ package com.example.ultimatetictactoe20.Music;
 
 import android.Manifest;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -18,9 +19,9 @@ import com.example.ultimatetictactoe20.MenuActivity;
 import com.example.ultimatetictactoe20.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MusicListActivity extends AppCompatActivity {
-
     private ListView lvSongs;
     private ArrayList<Song> songList;
     private ArrayList<String> songsNames;
@@ -32,9 +33,9 @@ public class MusicListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_list);
 
-        songsNames = new ArrayList<String>();
-        lvSongs = (ListView) findViewById(R.id.lvSongs);
-        songList = new ArrayList<Song>();
+        songsNames = new ArrayList<>();
+        lvSongs = findViewById(R.id.lvSongs);
+        songList = new ArrayList<>();
 
         if (ContextCompat.checkSelfPermission(MusicListActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(MusicListActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
@@ -42,20 +43,17 @@ public class MusicListActivity extends AppCompatActivity {
             } else {
                 ActivityCompat.requestPermissions(MusicListActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, mPrem);
             }
-
-        } else {
-            //todo enter to the list
         }
 
         getSongs();
-
 
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, songsNames);
         lvSongs.setAdapter(adapter);
         lvSongs.setOnItemClickListener((adapterView, view, i, l) -> {
             // change playing song to the chosen song
-            MenuActivity.musicService.setSong(i);
+            MenuActivity.musicService.setSong(songsNames.size() - 1 - i);
             MenuActivity.musicService.playSong();
+            finish();
         });
 
     }
@@ -70,14 +68,15 @@ public class MusicListActivity extends AppCompatActivity {
 
             Song song;
 
-            while(songs.moveToNext())
-            {
+            while(songs.moveToNext()) {
                 //long longSongID = songs.getLong(songID);
                 String currentTitle = songs.getString(songTitle);
                 songsNames.add(currentTitle);
                 song = new Song(songID,currentTitle);
                 songList.add(song);
             }
+
+            Collections.reverse(songsNames);
         }
     }
 
@@ -86,6 +85,5 @@ public class MusicListActivity extends AppCompatActivity {
         super.onResume();
         if (MenuActivity.isPlaying)
             MenuActivity.musicService.resume();
-
     }
 }

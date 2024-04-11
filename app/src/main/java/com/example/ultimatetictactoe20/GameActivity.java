@@ -1,6 +1,7 @@
 package com.example.ultimatetictactoe20;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -30,29 +31,34 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     private boolean canChoose;
 
     private final Button[][] buttons = new Button[3][3];
-    private final ImageView[][] mainImages = new ImageView[3][3];
     private ImageView turnDisplay;
     private TextView winnerDisplay;
 
     private Pose2d indicatorPose = new Pose2d(0, 0);
 
-    private boolean hasOpponent;
-    private String opponentName;
+    private boolean hasContact;
+    private String contactName = "";
 
-    private DatabaseHelper dbHelper;
+    private final int NULL_BOARD = 9;
+
+    public static Database database;
+    private LowBatteryReceiver batteryReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        dbHelper = new DatabaseHelper(this);
+        database = new Database(this);
 
         Intent incoming = getIntent();
-        hasOpponent = incoming.hasExtra("CONTACT_NAME");
-        opponentName = incoming.getStringExtra("CONTACT_NAME");
+        hasContact = incoming.hasExtra("CONTACT_NAME");
+        contactName = incoming.getStringExtra("CONTACT_NAME");
 
-        dbHelper = new DatabaseHelper(this);
+        batteryReceiver = new LowBatteryReceiver(this::saveGame, hasContact);
+
+        database = new Database(this);
+        registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
         for (int i = 0; i < Math.pow(boards.length, 2); i++) {
             boards[i / 3][i % 3] = new Board(getBoard(i), new Pose2d(i / 3, i % 3));
@@ -67,11 +73,10 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                 buttons[i][j] = findViewById(resIdA);
                 buttons[i][j].setOnClickListener(this);
 
-                mainImages[i][j] = findViewById(resIdB);
-                mainImages[i][j].setOnTouchListener(this);
-                mainImages[i][j].setTag("");
-
-                mainBoard.setImage(new Pose2d(i, j), mainImages[i][j]);
+                mainBoard.setImage(new Pose2d(i, j), findViewById(resIdB));
+                Pose2d pose = new Pose2d(i, j);
+                mainBoard.getBoardImage(pose).setOnTouchListener(this);
+                mainBoard.getBoardImage(pose).setTag("");
             }
         }
 
@@ -84,7 +89,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         canChoose = true;
 
 //        this.deleteDatabase("memory_db.db");
-        loadGame();
+        if (hasContact && database.hasSavedGame(contactName)) loadGame();
     }
 
     @Override
@@ -117,6 +122,18 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                         winnerDisplay.setVisibility(View.VISIBLE);
                         setControlPanelEnabled(false);
                         disableMainImages();
+                        database.remove(contactName);
+                        return;
+                    }
+
+                    // check if the entire game was tied
+                    if (mainBoard.isTie()) {
+                        winnerDisplay.setVisibility(View.VISIBLE);
+                        winnerDisplay.setText("It's a Tie!");
+                        turnDisplay.setVisibility(View.GONE);
+                        setControlPanelEnabled(false);
+                        disableMainImages();
+                        database.remove(contactName);
                         return;
                     }
 
@@ -125,7 +142,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                         // allow the next player to choose the next board, if the chosen board was won
                         setControlPanelEnabled(false);
                         // crate a new, non-real board in case the game is saved, to not display the indicator when relaunched
-                        selectedBoard = new Board(new ImageView[3][3], new Pose2d(22,3));
+                        selectedBoard = new Board(new ImageView[3][3], new Pose2d(0, NULL_BOARD));
                         canChoose = true;
                     } else {
                         disableButtons(getTakenCells(boards[i][j]));
@@ -136,7 +153,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                     updateIndicator(nextPose);
                     mainBoard.next();
                     turnDisplay.setImageResource(mainBoard.getTurn().getImg());
-                    saveGame();
+                    if (hasContact) saveGame();
                 }
             });
     }
@@ -148,7 +165,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         // main image pressed
         if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
             foreach((i, j) -> {
-                if (mainImages[i][j].getId() == id) {
+                if (mainBoard.getBoardImage(new Pose2d(i, j)).getId() == id) {
                     if (canChoose && !boards[i][j].hasWon(Piece.EMPTY)) {
                         selectedBoard = boards[i][j];
                         updateIndicator(new Pose2d(i, j));
@@ -170,7 +187,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     }
 
     private void disableMainImages() {
-     foreach((i, j) -> mainImages[i][j].setClickable(false));
+     foreach((i, j) -> mainBoard.getBoardImage(new Pose2d(i, j)) .setClickable(false));
     }
 
     private void disableButtons(ArrayList<Button> buttons) {
@@ -192,14 +209,14 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
 
     private void updateIndicator(Pose2d pose) {
         // delete the last one
-        if (mainImages[indicatorPose.i][indicatorPose.j].getTag().equals("indicator"))
-            mainImages[indicatorPose.i][indicatorPose.j].setImageResource(R.drawable.empty);
+        if (mainBoard.getBoardImage(indicatorPose).getTag().equals("indicator"))
+            mainBoard.getBoardImage(indicatorPose).setImageResource(R.drawable.empty);
 
-        if (!mainImages[pose.i][pose.j].getTag().equals("image")) {
+        if (!mainBoard.getBoardImage(pose).getTag().equals("image")) {
             // update the pose to the new pose & display the indicator
             indicatorPose = pose;
-            mainImages[pose.i][pose.j].setImageResource(R.drawable.indicator);
-            mainImages[pose.i][pose.j].setTag("indicator");
+            mainBoard.getBoardImage(pose).setImageResource(R.drawable.indicator);
+            mainBoard.getBoardImage(pose).setTag("indicator");
         }
     }
 
@@ -231,25 +248,28 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
 
     private void saveGame(){
         // save file content
-        //(turn: x/o)(selectedBoard: 0 - 8)(canChoose: T/F)(mainBoardState: 9 * x/o/-)(gameState: 81 * x/o/-)
+        //(turn: x/o)(selectedBoard: 0 - 8/-)(canChoose: T/F)(mainBoardState: 9 * x/o/-)(gameState: 81 * x/o/-)
 
-        dbHelper.addData(String.valueOf(
+        database.saveState(String.valueOf(
                 mainBoard.getTurn().getChar()) + selectedBoard.getPose().getPoseIndex() +
-                (canChoose? "T" : "F") + mainBoard.toString() + gameToString());
-        Log.d(TAG, dbHelper.readData());
+                (canChoose? "T" : "F") + mainBoard.toString() + gameToString(),
+                contactName);
+
+        Log.d(TAG, "saved: " + database.getState(contactName));
     }
 
     private void loadGame(){
-        String saveFile = dbHelper.readData();
+        String saveFile = database.getState(contactName);
 
         // turn
         if (saveFile.charAt(0) == 'O') mainBoard.next();
 
         // current board location
         int currentBoardLocation = saveFile.charAt(1) - '0'; // subtract '0' to get the ASCII index
-        selectedBoard = boards[currentBoardLocation / 3][currentBoardLocation % 3];
-        if (selectedBoard.getPose().getPoseIndex() != 69)
-            new Handler().postDelayed(()-> updateIndicator(selectedBoard.getPose()), 25);
+        if (currentBoardLocation != NULL_BOARD) {
+            selectedBoard = boards[currentBoardLocation / 3][currentBoardLocation % 3];
+            new Handler().postDelayed(() -> updateIndicator(selectedBoard.getPose()), 25);
+        }
 
         // main board state:
         mainBoard.loadBoard(saveFile.substring(3, 12));
@@ -258,7 +278,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         // game state
         AtomicInteger index = new AtomicInteger(12);
         foreach((i, j)-> {
-            boards[i][j].loadBoard(dbHelper.readData().substring(index.get(), index.get() + 9));
+            boards[i][j].loadBoard(database.getState(contactName).substring(index.get(), index.get() + 9));
             boards[i][j].update();
             index.addAndGet(9);
         });

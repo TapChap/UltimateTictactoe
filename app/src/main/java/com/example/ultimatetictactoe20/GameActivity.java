@@ -32,7 +32,6 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     private boolean canChoose;
 
     private final Button[][] buttons = new Button[3][3];
-    private final ConstraintLayout[][] boardLayouts = new ConstraintLayout[3][3];
     private ImageView turnDisplay;
     private TextView winnerDisplay;
 
@@ -82,7 +81,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
 
                 String strC = "Grid" + i + j;
                 int resIdC = getResources().getIdentifier(strC, "id", getPackageName());
-                boardLayouts[i][j] = findViewById(resIdC);
+                boards[i][j].addLayout(findViewById(resIdC));
             }
         }
 
@@ -94,7 +93,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         setControlPanelEnabled(false);
         canChoose = true;
 
-//        this.deleteDatabase("memory_db.db");
+//        this.deleteDatabase"tictactoe.db");
         if (hasContact && database.hasSavedGame(contactName)) loadGame();
     }
 
@@ -118,7 +117,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                         mainBoard.getBoardImage(currentPose).setClickable(false);
                         mainBoard.getBoardImage(currentPose).setTag("image");
                         mainBoard.update();
-                        boardLayouts[currentPose.i][currentPose.j].setVisibility(View.INVISIBLE);
+                        selectedBoard.update();
                     } else if (selectedBoard.isTie()) {
                         selectedBoard.reset();
                         selectedBoard.update();

@@ -167,7 +167,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             isPlaying = !isPlaying;
         }
         if (item.getItemId() == R.id.changeMusicBttn) startActivity(new Intent(this, MusicListActivity.class));
-        if (item.getItemId() == R.id.eraseMemoryBttn) this.deleteDatabase("memory_db.db");
+        if (item.getItemId() == R.id.eraseMemoryBttn) this.deleteDatabase("tictactoe.db");
 
         return super.onOptionsItemSelected(item);
     }

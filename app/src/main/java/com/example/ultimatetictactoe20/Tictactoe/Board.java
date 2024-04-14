@@ -1,13 +1,17 @@
 package com.example.ultimatetictactoe20.Tictactoe;
 
+import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.function.BiConsumer;
 
 public class Board extends TictactoeManager {
     private ImageView[][] board = new ImageView[3][3];
+
+    private ConstraintLayout boardLayout;
     private Pose2d pose;
 
     private final String TAG = "Board";
@@ -15,6 +19,9 @@ public class Board extends TictactoeManager {
     public Board(ImageView[][] imageViews, Pose2d pose) {
         foreach((i, j) -> board[i][j] = imageViews[i][j]);
         this.pose = pose;
+    }
+    public void addLayout(ConstraintLayout layout){
+        this.boardLayout = layout;
     }
 
     public Board(){}
@@ -24,6 +31,7 @@ public class Board extends TictactoeManager {
             Piece piece = get(new Pose2d(i, j));
             board[i][j].setImageResource(piece.getImg());
             if (!piece.equals(Piece.EMPTY)) board[i][j].setTag("image");
+            if (this.hasWon()) boardLayout.setVisibility(View.INVISIBLE);
         });
     }
 

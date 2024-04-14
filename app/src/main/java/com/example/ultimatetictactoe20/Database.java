@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class Database extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "memory_db.db";
+    private static final String DATABASE_NAME = "tictactoe.db";
     private static final int DATABASE_VERSION = 2; // Increment version to update schema
 
     public static final String TABLE_NAME = "savetable";

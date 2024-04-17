@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.ultimatetictactoe20.Tictactoe.Board;
 import com.example.ultimatetictactoe20.Tictactoe.Piece;
@@ -24,6 +23,9 @@ import java.util.function.BiConsumer;
 
 public class GameActivity extends AppCompatActivity implements View.OnTouchListener, View.OnClickListener {
     private final String TAG = "GameActivity";
+
+    private Button backButton, resetButton;
+    private TextView contactDisplay;
 
     private Board[][] boards = new Board[3][3];
     private Board mainBoard = new Board();
@@ -37,7 +39,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
 
     private Pose2d indicatorPose = new Pose2d(0, 0);
 
-    private boolean hasContact;
+    private boolean hasContact = false;
     private String contactName = "";
 
     private final int NULL_BOARD = 9;
@@ -59,7 +61,19 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         batteryReceiver = new LowBatteryReceiver(this::saveGame, hasContact);
         registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
-        database = new Database(this);
+        backButton = findViewById(R.id.backBttn);
+        resetButton = findViewById(R.id.resetBttn);
+        contactDisplay = findViewById(R.id.contactDisplay);
+
+        backButton.setOnClickListener(this);
+        resetButton.setOnClickListener(this);
+
+        if (hasContact) {
+            contactDisplay.setVisibility(View.VISIBLE);
+            contactDisplay.setText(contactName);
+
+            resetButton.setVisibility(View.VISIBLE);
+        }
 
         for (int i = 0; i < Math.pow(boards.length, 2); i++) {
             boards[i / 3][i % 3] = new Board(getBoard(i), new Pose2d(i / 3, i % 3));
@@ -93,7 +107,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         setControlPanelEnabled(false);
         canChoose = true;
 
-//        this.deleteDatabase"tictactoe.db");
+//        this.deleteDatabase("tictactoe.db");
         if (hasContact && database.hasSavedGame(contactName)) loadGame();
     }
 
@@ -160,6 +174,24 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                     if (hasContact) saveGame();
                 }
             });
+
+        if (id == R.id.resetBttn) {
+            database.remove(contactName);
+            setControlPanelEnabled(false);
+            canChoose = true;
+
+            mainBoard.reset();
+            mainBoard.update();
+
+            foreach((i, j) -> {
+                boards[i][j].reset();
+                boards[i][j].update();
+                boards[i][j].setBoardVisibility(true);
+
+                mainBoard.getBoardImage(new Pose2d(i, j)).setTag("empty");
+            });
+        }
+        if (id == R.id.backBttn) finish();
     }
 
     @Override

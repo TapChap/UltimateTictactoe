@@ -9,6 +9,47 @@
     android:orientation="vertical"
     tools:context=".GameActivity">
 
+
+    <Button
+        android:id="@+id/resetBttn"
+        android:layout_width="91dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="18dp"
+        android:text="RESET"
+        android:textSize="18sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/backBttn"
+        android:layout_width="91dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="18dp"
+        android:text="BACK"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/contactDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:fontFamily="@font/assistant_bold"
+        android:textColor="@color/black"
+        android:text="TextView"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:flow_horizontalAlign="end"
+        app:layout_constraintEnd_toStartOf="@+id/resetBttn"
+        app:layout_constraintStart_toEndOf="@+id/backBttn"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/mainGridLayout"
         android:layout_width="match_parent"
@@ -17,7 +58,7 @@
         app:layout_constraintBottom_toTopOf="@id/winnerLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/contactDisplay">
 
         <!--        main grid-->
         <ImageView
@@ -40,8 +81,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.666"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/mainLine_Top"
@@ -432,8 +472,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/TR_left"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars"
-                />
+                tools:srcCompat="@tools:sample/avatars" />
 
             <ImageView
                 android:id="@+id/piece19"
@@ -1434,8 +1473,7 @@
             app:layout_constraintEnd_toStartOf="@+id/mainLine_Left"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars"
-            />
+            tools:srcCompat="@tools:sample/avatars" />
 
         <!--        top middle board image-->
         <ImageView
@@ -1490,8 +1528,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/mainLine_Right"
             app:layout_constraintTop_toBottomOf="@+id/mainLine_Top"
-            tools:srcCompat="@tools:sample/avatars"
-            />
+            tools:srcCompat="@tools:sample/avatars" />
 
 
         <!--        bottom left board image-->

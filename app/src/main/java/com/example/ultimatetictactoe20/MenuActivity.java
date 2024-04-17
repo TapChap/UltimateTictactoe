@@ -99,7 +99,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         }
     };
 
-    private static final int CONTACT_PICK_REQUEST_CODE = 1001; // You can use any unique integer value
+    private static final int CONTACT_PICK_REQUEST_CODE = 1001;
 
     @Override
     public void onClick(View view) {

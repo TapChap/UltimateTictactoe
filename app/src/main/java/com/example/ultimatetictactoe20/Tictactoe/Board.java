@@ -15,7 +15,7 @@ public class Board extends TictactoeManager {
     /**
      * The 2D array of ImageViews representing the board.
      */
-    private ImageView[][] board;
+    private ImageView[][] board = new ImageView[3][3];
 
     /**
      * The layout containing the board.

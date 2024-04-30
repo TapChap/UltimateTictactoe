@@ -108,8 +108,10 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
         if (id == R.id.MENUplayGuestBtn) startActivity(new Intent(this, GameActivity.class));
         if (id == R.id.MENUplayContactBtn) {
-            Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-            startActivityForResult(intent, CONTACT_PICK_REQUEST_CODE);
+            Intent contactPickerIntent = new Intent(Intent.ACTION_PICK);
+            contactPickerIntent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
+
+            contentLauncher.launch(contactPickerIntent);
         }
 
         if (view.getId() == R.id.MENUexitBtn) {
@@ -124,7 +126,6 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CONTACT_PICK_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Uri contactUri = data.getData();
                 Cursor cursor = getContentResolver().query(contactUri, null, null, null, null);
@@ -142,7 +143,6 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 if (cursor != null) {
                     cursor.close();
                 }
-            }
         }
     }
 

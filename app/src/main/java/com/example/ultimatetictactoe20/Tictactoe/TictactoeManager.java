@@ -2,9 +2,6 @@ package com.example.ultimatetictactoe20.Tictactoe;
 
 import android.util.Log;
 
-import com.example.ultimatetictactoe20.Tictactoe.Piece;
-import com.example.ultimatetictactoe20.Tictactoe.Pose2d;
-
 public class TictactoeManager {
 
     private Piece[][] board = new Piece[3][3];
@@ -26,24 +23,19 @@ public class TictactoeManager {
         }
     }
 
-    public void setPiece(Pose2d pose) {
+    public void setPiece(Pose pose) {
         setPiece(pose, isX ? Piece.X : Piece.O);
     }
 
-    public void setPiece(Pose2d pose, Piece piece) {
+    public void setPiece(Pose pose, Piece piece) {
         this.board[pose.i][pose.j] = piece;
     }
 
     public void loadBoard(String boardStr){
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                Pose2d pose = new Pose2d(i, j);
-                setPiece(pose, Piece.getPiece(boardStr.charAt(pose.getPoseIndex())));
-            }
-        }
+        Pose.forEach((pose)-> setPiece(pose, Piece.getPiece(boardStr.charAt(pose.getPoseIndex()))));
     }
 
-    public Piece get(Pose2d pose) {
+    public Piece get(Pose pose) {
         return board[pose.i][pose.j];
     }
 
@@ -72,8 +64,6 @@ public class TictactoeManager {
     public Piece getWinner(){
         return winner;
     }
-
-//    void update() {}
 
     private boolean checkRow(int row) {
         Piece p = board[0][row];

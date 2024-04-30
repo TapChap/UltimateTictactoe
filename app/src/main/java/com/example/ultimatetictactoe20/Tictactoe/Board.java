@@ -25,7 +25,7 @@ public class Board extends TictactoeManager {
     /**
      * The pose of the board.
      */
-    private Pose2d pose;
+    private Pose pose;
 
     /**
      * Creates a new Board object.
@@ -33,7 +33,7 @@ public class Board extends TictactoeManager {
      * @param imageViews the 2D array of ImageViews representing the board
      * @param pose       the pose of the board
      */
-    public Board(ImageView[][] imageViews, Pose2d pose) {
+    public Board(ImageView[][] imageViews, Pose pose) {
         this.board = imageViews;
         this.pose = pose;
     }
@@ -51,7 +51,7 @@ public class Board extends TictactoeManager {
         // Iterate over the board and update the ImageViews accordingly
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                Piece piece = get(new Pose2d(i, j));
+                Piece piece = get(new Pose(i, j));
                 board[i][j].setImageResource(piece.getImg());
                 if (!piece.equals(Piece.EMPTY)) {
                     board[i][j].setTag("image");
@@ -82,7 +82,7 @@ public class Board extends TictactoeManager {
      * @param pose  the pose of the ImageView
      * @param image the ImageView to set
      */
-    public void setImage(Pose2d pose, ImageView image) {
+    public void setImage(Pose pose, ImageView image) {
         this.board[pose.i][pose.j] = image;
     }
 
@@ -91,7 +91,7 @@ public class Board extends TictactoeManager {
      *
      * @return the pose of the board
      */
-    public Pose2d getPose() {
+    public Pose getPose() {
         return pose;
     }
 
@@ -101,20 +101,7 @@ public class Board extends TictactoeManager {
      * @param imgPose the pose of the ImageView
      * @return the ImageView at the given pose
      */
-    public ImageView getBoardImage(Pose2d imgPose) {
+    public ImageView getBoardImage(Pose imgPose) {
         return board[imgPose.i][imgPose.j];
-    }
-
-    /**
-     * Supplies all the indexes in the board to the given consumer.
-     *
-     * @param consumer the consumer that accepts the indexes
-     */
-    private void foreach(BiConsumer<Integer, Integer> consumer) {
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                consumer.accept(i, j);
-            }
-        }
     }
 }

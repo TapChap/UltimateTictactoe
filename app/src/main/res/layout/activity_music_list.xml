@@ -24,7 +24,7 @@
                 android:layout_weight="0.00"
                 android:fontFamily="@font/assistant_bold"
                 android:gravity="center_horizontal"
-                android:text=" Choose Song From Phone"
+                android:text="Choose Song From Phone"
                 android:textColor="@color/black"
                 android:textSize="45sp"
                 android:textStyle="normal|bold" />

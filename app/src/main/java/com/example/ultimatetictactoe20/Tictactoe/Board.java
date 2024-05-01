@@ -73,7 +73,8 @@ public class Board extends TictactoeManager {
      * @param visible true to make the board visible, false to make it invisible
      */
     public void setBoardVisibility(boolean visible) {
-        boardLayout.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+        // main board doesn't have a board layout
+        if (boardLayout != null) boardLayout.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
     }
 
     /**

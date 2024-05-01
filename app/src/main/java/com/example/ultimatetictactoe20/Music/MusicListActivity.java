@@ -28,9 +28,6 @@ public class MusicListActivity extends AppCompatActivity {
     private ArrayAdapter adapter;
     public static final int mPrem = 1;
 
-    String SQL = "CREATE TABLE " + "https://convert2mp3s.com/api/single/{FTYPE}?url={VIDEO_URL}";
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

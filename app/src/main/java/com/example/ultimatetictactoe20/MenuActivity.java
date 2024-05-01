@@ -100,8 +100,6 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         }
     };
 
-    private static final int CONTACT_PICK_REQUEST_CODE = 1001;
-
     @Override
     public void onClick(View view) {
         int id = view.getId();
@@ -172,5 +170,12 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         if (item.getItemId() == R.id.eraseMemoryBttn) this.deleteDatabase("tictactoe.db");
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopService(playIntent);
+        MusicService.stopPlayMusic();
     }
 }

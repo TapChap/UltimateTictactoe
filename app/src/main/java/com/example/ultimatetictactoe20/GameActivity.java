@@ -1,9 +1,12 @@
 package com.example.ultimatetictactoe20;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -48,6 +51,8 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     public static Database database;
     private LowBatteryReceiver batteryReceiver;
 
+    private Vibrator vibrate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +66,8 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
 
         batteryReceiver = new LowBatteryReceiver(this::saveGame, hasContact);
         registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+
+        vibrate = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
 
         backButton = findViewById(R.id.backBttn);
         resetButton = findViewById(R.id.resetBttn);
@@ -120,6 +127,8 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                     Pose nextPose = new Pose(i, j); // the pose of the next board
                     Pose currentPose = selectedBoard.getPose(); // the pose of the selected board
 
+                    vibrate.vibrate(VibrationEffect.createOneShot(150, 127));
+
                     setControlPanelEnabled(true);
                     selectedBoard.setPiece(nextPose, mainBoard.getTurn());
                     selectedBoard.update(); // update the image in the board that was just played
@@ -141,6 +150,9 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                         winnerDisplay.setVisibility(View.VISIBLE);
                         setControlPanelEnabled(false);
                         database.remove(contactName);
+                        vibrate.vibrate(VibrationEffect.createWaveform(
+                                new long[]{0, 200, 50, 50, 50, 50, 50, 50, 50, 200, 200, 500},
+                                -1));;
                         return;
                     }
 

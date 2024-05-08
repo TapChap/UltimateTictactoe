@@ -27,6 +27,8 @@ public class Board extends TictactoeManager {
      */
     private Pose pose;
 
+    public static Board emptyBoard = new Board(new ImageView[3][3], new Pose(0, 9));
+
     /**
      * Creates a new Board object.
      *
@@ -41,8 +43,7 @@ public class Board extends TictactoeManager {
     /**
      * Creates a new Board object with no initial values.
      */
-    public Board() {
-    }
+    public Board() {}
 
     /**
      * Updates the board with the current game state.

@@ -104,8 +104,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         int id = view.getId();
 
-//        if (id == R.id.MENUplayGuestBtn) startActivity(new Intent(this, GameActivity.class));
-        if (id == R.id.MENUplayGuestBtn) startActivity(new Intent(this, networkingActiity.class));
+        if (id == R.id.MENUplayGuestBtn) startActivity(new Intent(this, GameActivity.class));
         if (id == R.id.MENUplayContactBtn) {
             Intent contactPickerIntent = new Intent(Intent.ACTION_PICK);
             contactPickerIntent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);

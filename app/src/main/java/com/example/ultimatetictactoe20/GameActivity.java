@@ -46,8 +46,6 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     private boolean hasContact = false;
     private String contactName = "";
 
-    private final int NULL_BOARD = 9;
-
     public static Database database;
     private LowBatteryReceiver batteryReceiver;
 
@@ -171,7 +169,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                         // allow the next player to choose the next board, if the chosen board was won
                         setControlPanelEnabled(false);
                         // crate a new, non-real board in case the game is saved, to not display the indicator when relaunched
-                        selectedBoard = new Board(new ImageView[3][3], new Pose(0, NULL_BOARD));
+                        selectedBoard = Board.emptyBoard;
                         canChoose = true;
                     } else {
                         disableButtons(getTakenCells(boards[i][j]));
@@ -301,7 +299,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
 
         // current board location
         int currentBoardLocation = saveFile.charAt(1) - '0'; // subtract '0' to get the ASCII index
-        if (currentBoardLocation != NULL_BOARD) {
+        if (currentBoardLocation != Board.emptyBoard.getPose().getPoseIndex()) {
             Pose pose = new Pose(currentBoardLocation);
             selectedBoard = boards[pose.i][pose.j];
             new Handler().postDelayed(() -> updateIndicator(selectedBoard.getPose()), 25);

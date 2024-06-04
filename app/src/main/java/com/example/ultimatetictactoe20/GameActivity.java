@@ -81,10 +81,9 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
             resetButton.setVisibility(View.VISIBLE);
         }
 
-        Pose.forEach((pose)-> boards[pose.i][pose.j] = new Board(getBoard(pose.getPoseIndex()), pose));
+        Pose.forEach((i, j, pose)-> boards[i][j] = new Board(getBoard(pose.getPoseIndex()), pose));
 
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+            Pose.forEach((i, j, pose)-> {
                 String strA = "button" + i + j;
                 int resIdA = getResources().getIdentifier(strA, "id", getPackageName());
                 buttons[i][j] = findViewById(resIdA);
@@ -92,7 +91,6 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
 
                 String strB = "boardImage" + i + j;
                 int resIdB = getResources().getIdentifier(strB, "id", getPackageName());
-                Pose pose = new Pose(i, j);
                 mainBoard.setImage(pose, findViewById(resIdB));
                 mainBoard.getBoardImage(pose).setOnTouchListener(this);
                 mainBoard.getBoardImage(pose).setTag("");
@@ -100,8 +98,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                 String strC = "Grid" + i + j;
                 int resIdC = getResources().getIdentifier(strC, "id", getPackageName());
                 boards[i][j].addLayout(findViewById(resIdC));
-            }
-        }
+        });
 
         turnDisplay = findViewById(R.id.turnDisplay);
         turnDisplay.setImageResource(Piece.X.getImg());
@@ -119,10 +116,9 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     public void onClick(View view) {
         int id = view.getId();
 
-        Pose.forEach((i, j) -> {
+        Pose.forEach((i, j, nextPose) -> {
             // control panel button pressed
                 if (buttons[i][j].getId() == id) {
-                    Pose nextPose = new Pose(i, j); // the pose of the next board
                     Pose currentPose = selectedBoard.getPose(); // the pose of the selected board
 
                     vibrate.vibrate(VibrationEffect.createOneShot(150, 127));
@@ -148,9 +144,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                         winnerDisplay.setVisibility(View.VISIBLE);
                         setControlPanelEnabled(false);
                         database.remove(contactName);
-                        vibrate.vibrate(VibrationEffect.createWaveform(
-                                new long[]{0, 200, 50, 50, 50, 50, 50, 50, 50, 200, 200, 500},
-                                -1));;
+                        vibrate.vibrate(VibrationEffect.createOneShot(500, 255));
                         return;
                     }
 
@@ -192,12 +186,12 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
             mainBoard.reset();
             mainBoard.update();
 
-            Pose.forEach((i, j) -> {
+            Pose.forEach((i, j, pose) -> {
                 boards[i][j].reset();
                 boards[i][j].update();
                 boards[i][j].setBoardVisibility(true);
 
-                mainBoard.getBoardImage(new Pose(i, j)).setTag("empty");
+                mainBoard.getBoardImage(pose).setTag("empty");
             });
         }
         if (id == R.id.backBttn) finish();
@@ -209,11 +203,11 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
 
         // main image pressed
         if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-            Pose.forEach((i, j) -> {
-                if (mainBoard.getBoardImage(new Pose(i, j)).getId() == id) {
+            Pose.forEach((i, j, pose) -> {
+                if (mainBoard.getBoardImage(pose).getId() == id) {
                     if (canChoose && !boards[i][j].hasWon() && !mainBoard.hasWon()) {
                         selectedBoard = boards[i][j];
-                        updateIndicator(new Pose(i, j));
+                        updateIndicator(pose);
                         setControlPanelEnabled(true);
                         disableButtons(getTakenCells(boards[i][j]));
                     }
@@ -225,7 +219,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     }
 
     private void setControlPanelEnabled(boolean enabled) {
-        Pose.forEach((i, j) -> {
+        Pose.forEach((i, j, pose) -> {
             buttons[i][j].setEnabled(enabled);
             buttons[i][j].setAlpha(enabled ? 1f : 0.25f);
         });
@@ -241,8 +235,8 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     private ArrayList<Button> getTakenCells(Board board) {
         ArrayList<Button> takenButtons = new ArrayList<>();
 
-        Pose.forEach((i, j) -> {
-            if (board.get(new Pose(i, j)) != Piece.EMPTY) takenButtons.add(buttons[i][j]);
+        Pose.forEach((i, j, pose) -> {
+            if (board.get(pose) != Piece.EMPTY) takenButtons.add(buttons[i][j]);
         });
 
         return takenButtons;
@@ -264,8 +258,8 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     public ImageView[][] getBoard(int boardIndex) {
         ImageView[][] board = new ImageView[3][3];
 
-        Pose.forEach((i, j)-> {
-            String str = "piece" + ((boardIndex * 9) + new Pose(i, j).getPoseIndex());
+        Pose.forEach((i, j, pose)-> {
+            String str = "piece" + ((boardIndex * 9) + pose.getPoseIndex());
             int resId = getResources().getIdentifier(str, "id", getPackageName());
             board[i][j] = findViewById(resId);
         });
@@ -275,7 +269,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
 
     private String gameToString(){
         StringBuilder builder = new StringBuilder();
-        Pose.forEach((i, j)-> builder.append(boards[i][j].toString()));
+        Pose.forEach((i, j, pose)-> builder.append(boards[i][j].toString()));
         return builder.toString();
     }
 
@@ -311,7 +305,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
 
         // game state
         AtomicInteger index = new AtomicInteger(12);
-        Pose.forEach((i, j)-> {
+        Pose.forEach((i, j, pose)-> {
             boards[i][j].loadBoard(database.getState(contactName).substring(index.get(), index.get() + 9));
             boards[i][j].update();
             index.addAndGet(9);

@@ -2,6 +2,8 @@ package com.example.ultimatetictactoe20.Tictactoe;
 
 import androidx.annotation.NonNull;
 
+import com.example.ultimatetictactoe20.TriConsumer;
+
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -24,18 +26,14 @@ public class Pose {
         return i * 3 + j;
     }
 
-    // supplies i, j values to all poses in a 3X3 board
-    public static void forEach(BiConsumer<Integer, Integer> index){
+    // supplies i, j, and pose values to all poses in a 3X3 board
+    // consumer could use i, j values or Pose by preference
+    public static void forEach(TriConsumer<Integer, Integer, Pose> index){
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                index.accept(i, j);
+                index.accept(i, j, new Pose(i, j));
             }
         }
-    }
-
-    // supplies Pose values to all poses in a 3X3 board
-    public static void forEach(Consumer<Pose> pose){
-        forEach((i, j)-> pose.accept(new Pose(i, j)));
     }
 
     @NonNull

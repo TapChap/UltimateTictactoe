@@ -2,6 +2,8 @@ package com.example.ultimatetictactoe20.Tictactoe;
 
 import android.util.Log;
 
+import com.example.ultimatetictactoe20.TriConsumer;
+
 public class TictactoeManager {
 
     private Piece[][] board = new Piece[3][3];
@@ -32,7 +34,7 @@ public class TictactoeManager {
     }
 
     public void loadBoard(String boardStr){
-        Pose.forEach((pose)-> setPiece(pose, Piece.getPiece(boardStr.charAt(pose.getPoseIndex()))));
+        Pose.forEach((i, j, pose) -> TictactoeManager.this.setPiece(pose, Piece.getPiece(boardStr.charAt(pose.getPoseIndex()))));
     }
 
     public Piece get(Pose pose) {

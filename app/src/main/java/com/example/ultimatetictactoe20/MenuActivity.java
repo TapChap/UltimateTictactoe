@@ -45,11 +45,13 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         Button playContactButton = findViewById(R.id.MENUplayContactBtn);
         Button playGuestButton = findViewById(R.id.MENUplayGuestBtn);
         Button exitButton = findViewById(R.id.MENUexitBtn);
+        Button rulesButton = findViewById(R.id.rulesBttn);
 
         playContactButton.setOnClickListener(this);
         playGuestButton.setOnClickListener(this);
 
         exitButton.setOnClickListener(this);
+        rulesButton.setOnClickListener(this);
 
         // music
         musicService = new MusicService();
@@ -118,6 +120,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
             isPlaying = false;
             finishAffinity();
         }
+        if (view.getId() == R.id.rulesBttn) startActivity(new Intent(this, RulesActivity.class));
     }
 
     @Override
@@ -147,7 +150,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.music_menu, menu);
-        Log.d("onCreatea", "onCreateOptionsMenu");
+        Log.d("onCreate", "onCreateOptionsMenu");
         return true;
     }
 

@@ -24,10 +24,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     private static MediaPlayer player; //media player
     private ArrayList<Song> valuesList; //songs List
     private int songPosn;  //current position
-    private int positionPausedInSong; // position in the pused song
     private final IBinder musicBind = new MusicBinder();
-    private boolean isStopped; //state of the player
-    private Intent playIntent;
     @Override
     public void onCreate() {
         //create music Service
@@ -100,13 +97,11 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         //set player properties
         player.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
         player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        isStopped = false;
     }
 
     public void playSong() {
         // play song from the list
-        if (player != null) //אם נוצר כבר
-            player.reset();
+        if (player != null) player.reset();
 
         Song songToPlay = valuesList.get(songPosn);
         long songId = songToPlay.getId();
@@ -118,14 +113,10 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
             Log.e("MUSIC SERVICE", "Error setting data source", e);
         }
         player.prepareAsync();
-
         player.setOnPreparedListener((mediaPlayer -> {
-
             mediaPlayer.setLooping(true);
             mediaPlayer.start();
         }));
-
-        isStopped = false;
     }
 
     public void setList(ArrayList<Song> theSongs) {
@@ -166,7 +157,6 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     @Override
     public void onCompletion(MediaPlayer mp) {
         // TODO Auto-generated method stub
-
     }
 
     @Override
